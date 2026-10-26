@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="從原始碼、Client／Server 到網路、部署、快取與維運，以熟悉的網站和 RO 經驗理解軟體。">
+<title>透視軟體｜開發、部署與維運知識地圖</title>
+<link rel="stylesheet" href="assets/style.css">
+<script defer src="data/knowledge.js"></script>
+<script defer src="assets/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要內容</a>
+<header class="top"><a class="brand" href="#overview"><span class="brand-mark" aria-hidden="true">◈</span> 透視軟體</a><span class="edition">知識地圖 · 初版</span><button id="print" type="button">列印／存成 PDF</button></header>
+<div class="layout">
+<aside class="sidebar" aria-label="網站導覽"><nav><a href="#overview">先看全貌</a><a href="#chapters">主題閱讀</a><a href="#glossary">名詞查閱</a><a href="#faq">常見疑問</a><a href="#sources">參考來源</a></nav><details class="chapter-menu"><summary>全部主題</summary><ol id="chapter-nav"></ol></details><p class="side-note">先理解分工，再選工具。<br>不用一次背完所有名詞。</p></aside>
+<main id="main">
+<section id="overview" class="hero"><p class="eyebrow">DEVELOP · DEPLOY · OPERATE</p><h1>看懂一個軟體，<br>從哪裡開始？</h1><p class="intro">原始碼怎麼變成程式？Client 放哪裡，在哪裡執行？網域、資料庫與 Tunnel 又各管哪一段？</p><p>用網站、遠端桌面與 RO 的熟悉經驗，拆開那些容易混在一起的概念。這是可持續補充的入門知識地圖，不是所有技術的完整百科。</p><div class="hero-actions"><a class="button" href="#chapters">開始閱讀</a><a href="#glossary">直接查名詞 →</a></div><div class="principles"><div><strong>角色</strong><span>負責什麼？</span></div><div><strong>位置</strong><span>在哪裡執行？</span></div><div><strong>連線</strong><span>如何互相溝通？</span></div><div><strong>信任</strong><span>誰決定正式結果？</span></div></div></section>
+<section class="quick-map" aria-labelledby="quick-title"><h2 id="quick-title">先記住這張地圖</h2><div class="map-grid"><article><span>01 · 製作</span><h3>原始碼與建置</h3><p>把想法寫成程式，再產出可以執行或發布的版本。</p></article><article><span>02 · 取得</span><h3>託管與載入</h3><p>檔案放在網站空間，由使用者下載；存放不等於執行。</p></article><article><span>03 · 運作</span><h3>Client 與 Server</h3><p>各自在所屬裝置運行，依協定交換請求與結果。</p></article><article><span>04 · 保存</span><h3>資料與維運</h3><p>保存需要留下的資料，驗證權限、監控並準備復原。</p></article></div><p class="note">不是每個軟體都需要四層。純靜態網站可以只有檔案與瀏覽器；多人服務通常需要更多後端與維運設計。</p></section>
+<section id="chapters"><div class="section-heading"><div><p class="eyebrow">READ BY TOPIC</p><h2>主題閱讀</h2></div><span id="chapter-count" class="count"></span></div><p class="muted">每一篇都以「一句理解 → 實際分工 → 熟悉例子 → 常見誤解」組織。點標題展開。</p><div id="chapters-list"></div></section>
+<section id="glossary"><div class="section-heading"><div><p class="eyebrow">WORDS IN CONTEXT</p><h2>名詞查閱</h2></div><span id="term-count" class="count"></span></div><label for="search">搜尋名稱、英文或說明</label><div class="search-row"><input id="search" type="search" placeholder="例如：封包、位置、Rust、快取" autocomplete="off"><button id="clear" type="button">清除</button></div><p id="search-status" class="muted" role="status" aria-live="polite"></p><div id="glossary-list" class="glossary-grid"></div><p id="no-results" hidden>找不到符合的名詞。試試其他關鍵字，或從主題閱讀尋找相關概念。</p></section>
+<section id="faq"><p class="eyebrow">QUESTIONS THAT CONNECT THE DOTS</p><h2>常見疑問</h2><div id="faq-list"></div></section>
+<section id="sources"><p class="eyebrow">SOURCES & SCOPE</p><h2>參考來源與閱讀界線</h2><p>以官方技術文件與原始專案為延伸閱讀。平台功能、價格與配額會變動，這裡不提供永久有效的費率或容量承諾。LINE、Facebook 與遊戲流程是教學用簡化例子，不代表廠商私有實作。</p><ul id="sources-list" class="sources-list"></ul><p class="note">整理日期：<span id="updated"></span>（台灣時間）。基礎概念與平台行為應分開核對；實際部署仍須依版本、環境和授權確認。本網站不收集登入資料，不連線資料庫，也不使用第三方追蹤。</p></section>
+<footer><p>透視軟體 · <span id="version"></span> · 內容優先，逐步補充</p><a href="#overview">回到頂端 ↑</a></footer>
+<noscript><p class="note">此頁使用少量 JavaScript 載入靜態內容。請啟用 JavaScript，或直接閱讀專案中的 docs/KNOWLEDGE.md。</p></noscript>
+</main></div>
+</body></html>
