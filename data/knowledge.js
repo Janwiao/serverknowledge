@@ -1,0 +1,1284 @@
+/* Generated from knowledge.json; run node scripts/sync-data.mjs after edits. */
+window.SOFTWARE_ATLAS = {
+  "title": "透視軟體",
+  "subtitle": "從程式碼到上線，把軟體背後的每一層看清楚。",
+  "version": "0.1.0",
+  "updated": "2026-10-27",
+  "chapters": [
+    {
+      "id": "map",
+      "title": "先看全貌：一套軟體有哪些層？",
+      "lead": "先問「它負責什麼、在哪裡執行、跟誰溝通」，比先背產品名稱有用。",
+      "points": [
+        "程式與資料：原始碼、編譯產物、設定、圖片和資料庫，各有不同用途。",
+        "執行與分工：裝置上的 Client 呈現與接收操作；Server 處理服務規則；資料庫保存需要長期留下的資料。這是常見分工，不是所有軟體都必須連網。",
+        "部署與連線：檔案放哪裡、服務如何啟動、網路怎麼抵達，是另外三個問題。",
+        "維運與信任：更新、監控、備份、權限和輸入驗證，決定它能否長期可靠運作。"
+      ],
+      "example": "RO 的 EXE、Login／Char／Map 程式和 MariaDB 是不同角色；網站也可以採同樣的分工。",
+      "trap": "「伺服器」有時指一台主機，有時指提供服務的程式。先確認談的是硬體還是軟體角色。",
+      "flow": [
+        "開發原始碼",
+        "建置與測試",
+        "部署檔案／啟動服務",
+        "使用者操作",
+        "後端處理與保存",
+        "監控、更新、備份"
+      ],
+      "related": [
+        "lifecycle",
+        "roles",
+        "hosting"
+      ]
+    },
+    {
+      "id": "lifecycle",
+      "title": "從 src 到執行：編譯、建置與發布",
+      "lead": "原始碼是寫法；產物是交付形式；執行才真的消耗資源。",
+      "points": [
+        "編譯把某種程式表示轉成另一種，例如 C/C++ 或 Rust 產生機器碼。建置還可能包含依賴處理、測試、打包與素材轉換。",
+        "JavaScript、PHP 等也需要執行環境。不是沒有 EXE 就沒有程式，也不是所有語言都用完全相同的編譯流程。",
+        "部署是把適合的版本與設定放到目標環境；啟動是讓作業系統或執行環境開始運行它。上傳成功不等於服務已啟動。",
+        "BAT／Shell 腳本通常把啟動指令串起來。真正提供網站的可能是 Node.js、Python 或另一個 Web Server。"
+      ],
+      "example": "RA 的 src 經編譯產生 Server 程式，執行時還讀 conf、db、script；單獨拿到 EXE 不一定足以還原整套環境。",
+      "trap": "Git repo 有新版，不表示正在運行的服務已換成新版；修改原始碼後是否需重建、重啟，要看工具與部署流程。",
+      "flow": [
+        "src＋依賴＋設定範本",
+        "build／compile",
+        "產物",
+        "部署到目標主機",
+        "啟動 process"
+      ],
+      "related": [
+        "repository",
+        "runtime",
+        "operations"
+      ]
+    },
+    {
+      "id": "roles",
+      "title": "前端、後端、Client、Server 不是同一組名詞",
+      "lead": "前後端強調責任；Client／Server 強調一次互動中的角色。",
+      "points": [
+        "前端處理使用者看見與操作的介面，可能是網頁、手機 App 或桌面程式。後端處理權限、規則、服務與資料存取。",
+        "「管理後台」是一種管理用途的介面。它同樣有按鈕與頁面的前端，以及處理管理請求的後端，不能因為叫後台就把整頁當成後端程式。",
+        "Client 發出請求、Server 提供服務。一個後端向另一個服務發請求時，也扮演那次互動的 Client。",
+        "瀏覽器下載網頁 Client 後，JavaScript 通常在使用者裝置執行；Server 端程式仍在伺服器執行。有些框架會在伺服器先產生 HTML。"
+      ],
+      "example": "PHP 管理站：瀏覽器顯示表單是前端；PHP 驗證 GM 權限並寫入資料是後端。",
+      "trap": "「檔案存放在機房」不等於「Client 在機房運算」。下載地點與執行地點要分開。",
+      "flow": [
+        "使用者按鈕",
+        "Client 送請求",
+        "Server 驗證及處理",
+        "讀寫資料",
+        "回應 Client 呈現"
+      ],
+      "related": [
+        "database",
+        "runtime",
+        "security"
+      ]
+    },
+    {
+      "id": "runtime",
+      "title": "原生 EXE、網頁 Client 與遠端桌面",
+      "lead": "看起來都在螢幕上，但程式可能在不同地方執行。",
+      "points": [
+        "原生桌面程式通常由玩家裝置的作業系統執行；網頁程式通常由玩家裝置的瀏覽器執行。兩者仍可能需要後端服務。",
+        "同一份 Client 檔案從不同空間取得，內容不變就不會自動獲得較好的演算法或修掉原本錯誤。瀏覽器、硬體、設定及版本仍會影響表現。",
+        "遠端桌面是操作另一台電腦，通常傳送畫面與輸入；在遠端電腦啟動的程式，主要消耗那台電腦的 CPU／GPU／記憶體。",
+        "Rust 是程式語言；RustDesk 是遠端桌面軟體。名稱相似不代表同一個概念。連線可以涉及直連、媒合或中繼，不保證永遠走同一路徑。"
+      ],
+      "example": "筆電透過 RustDesk 操作桌機開 RO：RO 主要仍在桌機執行；筆電還要負責遠端畫面的接收與解碼。",
+      "trap": "遠端控制不是匿名保證。連線日誌、服務端登入、代理／VPN 設定及網路出口都可能留下不同紀錄。",
+      "flow": [
+        "原生：下載 EXE → 本機執行",
+        "網頁：載入 HTML／JS → 瀏覽器執行",
+        "遠端：本機輸入 → 遠端執行 → 畫面回傳"
+      ],
+      "related": [
+        "performance",
+        "network",
+        "assets"
+      ]
+    },
+    {
+      "id": "database",
+      "title": "SQL、MariaDB、JSON、Navicat 怎麼分？",
+      "lead": "語言、資料庫系統、檔案格式與管理工具，分成四格就不會混。",
+      "points": [
+        "SQL 是查詢與操作關聯式資料庫的語言。MariaDB、PostgreSQL、SQLite 是不同資料庫系統，語法與功能不完全相同。",
+        "Navicat 等工具是管理客戶端，不是資料庫本體；關掉管理工具，資料庫服務仍可繼續運行。",
+        "JSON 是資料表示格式。它可以是設定檔、API 回應，也可以被存進資料庫欄位；看到 JSON 不代表整個系統沒有 SQL。",
+        "交易（transaction）讓一組變更以一致方式完成；例如購買時扣錢與加道具要一起成功。重試還需要避免同一筆操作重複結算。",
+        "Cloudflare D1 是採 SQLite SQL 語意的受管 serverless 資料庫服務，不是 MariaDB，也不是把現有 MariaDB schema 原封不動搬入就能使用。SQLite 常以嵌入式資料庫方式運作；自架 MariaDB 則由你管理資料庫服務。選擇要看 SQL 相容性、存取方式、維運、配額與工作負載，不能只用新舊或遊戲／非遊戲概括。"
+      ],
+      "example": "Server 和 MariaDB 同機時可走本機連線；分兩台時則要設計私有連線與權限。玩家通常不應拿到資料庫管理憑證。",
+      "trap": "集中資料庫能減少兩份存檔互蓋，但不會自動解決同時修改、重複請求或錯誤的業務邏輯。",
+      "flow": [
+        "Client 提交購買意圖",
+        "Server 驗證身分／價格／餘額",
+        "資料庫交易",
+        "成功後回傳新狀態"
+      ],
+      "related": [
+        "security",
+        "operations",
+        "roles"
+      ]
+    },
+    {
+      "id": "network",
+      "title": "連線地圖：網域、IP、Port 與本機位置",
+      "lead": "網域幫你找到入口，IP 指向網路端點，Port 區分端點上的服務。",
+      "points": [
+        "DNS 將名稱解析成對應紀錄；它不是把遊戲運算搬到網域註冊商。買網域也不等於買了主機或資料庫。",
+        "127.0.0.1 是「正在發出連線的那台主機自己」。放在玩家瀏覽器的設定裡，指的是玩家電腦，不是開發者電腦。",
+        "內網位址、公開位址與內部服務互連用途不同。朋友能否抵達取決於路由、防火牆、監聽位址及對外入口，而不只是程式有沒有開。",
+        "Port 轉發把外部連線導向內網服務；NAT 與防火牆不是同一概念。內部服務不必為了對外開放而全部改填公開 IP。"
+      ],
+      "example": "RO 三端在同機互連可使用合適的內部位址；提供給玩家連線的位址則必須是玩家能抵達的入口。具體設定依端與網路拓撲而定。",
+      "trap": "網址中的 Port、本機服務監聽的 Port、路由器外部轉發的 Port 可以不同；先畫出每一段再設定。",
+      "flow": [
+        "使用者輸入網域",
+        "DNS 解析入口",
+        "路由／代理／防火牆",
+        "目標服務監聽 Port"
+      ],
+      "related": [
+        "tunnel",
+        "protocol",
+        "hosting"
+      ]
+    },
+    {
+      "id": "protocol",
+      "title": "HTTP、WebSocket、封包與 API",
+      "lead": "封包不是魔法；雙方必須同意資料的格式、順序與意義。",
+      "points": [
+        "API 是程式提供的操作介面。網路 API 常透過 HTTP 傳遞請求與回應，但 API 不一定都經網路。",
+        "HTTP 常用於載入網頁、素材與資料請求；WebSocket 建立持續的雙向通訊，適合需要主動推送的互動，但不會自動提供遊戲公平性。",
+        "網路封包是傳輸層面的資料單位；遊戲常說的封包也可能指應用層訊息。TCP 是位元組串流，一次 read 不保證剛好等於一個完整遊戲訊息。",
+        "協定版本定義欄位、長度、訊息識別與行為。Client 和 Server 理解不同，可能解析失敗、斷線或得到錯誤結果。"
+      ],
+      "example": "RO 的 packetver 相容性，類似雙方必須使用能互相理解的「表格格式與規則」。改個 Port 並不能修正封包格式不相容。",
+      "trap": "HTTPS／WSS 保護傳輸，不代表 Server 可以相信 Client 傳來的金錢、傷害或管理員身分。",
+      "flow": [
+        "操作意圖",
+        "序列化成訊息",
+        "透過連線傳輸",
+        "解析與驗證",
+        "執行規則並回覆"
+      ],
+      "related": [
+        "security",
+        "network",
+        "cases"
+      ]
+    },
+    {
+      "id": "hosting",
+      "title": "網站空間、cPanel、GitHub Pages 與雲端",
+      "lead": "託管解決「放哪裡、由誰維持服務」，不是改寫你的 Client。",
+      "points": [
+        "cPanel 是常見主機管理介面；FTP／SFTP 是傳檔方式；Web Server 提供 HTTP 服務。三者不能視為同一樣東西。",
+        "GitHub Pages 是靜態網站託管：提供 HTML、CSS、JS 等檔案。它不直接執行你的 PHP 或 MariaDB 服務。",
+        "一般網站空間、VPS、獨立主機與受管平台，主要差在控制權、隔離程度、可用環境、維運責任與方案限制。",
+        "ChatGPT Sites 是網站託管與發布平台的一個選項，不是所有網站的統稱。這份知識庫不依賴 Sites，可以放到任何合適的靜態網站空間。",
+        "平台也可依層分類：Cloudflare Workers 是受管應用執行環境；Amazon RDS 是受管關聯式資料庫服務；R2 等物件儲存提供檔案／物件保存。它們不是彼此完全替代，也不是都能直接執行 Windows 遊戲 EXE。"
+      ],
+      "example": "以前用 BAT 啟動作品網站，再讓朋友連進來，已經是在提供網站服務。改用受管託管，是把部分服務維持工作交給平台。",
+      "trap": "網站空間可以提供 Client 檔案；遊戲 Server 則是處理遊戲服務。兩者可同機，也可以分開，不必為了放 Client 而佔用遊戲主機。",
+      "flow": [
+        "repo 原始檔",
+        "網站發布流程",
+        "Web Server／靜態託管",
+        "使用者下載並執行 Client"
+      ],
+      "related": [
+        "repository",
+        "performance",
+        "tunnel"
+      ]
+    },
+    {
+      "id": "tunnel",
+      "title": "Tunnel、反向代理與遠端桌面：不同用途",
+      "lead": "通道改變「怎麼連到服務」，不替你提供遊戲運算主機。",
+      "points": [
+        "Cloudflare Tunnel 由來源端的 cloudflared 主動建立對外連線，再讓平台將符合路由的請求送回來源服務。通常不需要一般的入站 Port 轉發。",
+        "公開 HTTP 網站可讓使用者以瀏覽器訪問；非 HTTP 的存取方式不同，可能需要使用者端連線工具或私有網路設定。不要把一般 Tunnel 當成任意遊戲 TCP 的透明公開入口。",
+        "反向代理在服務前面接請求，再送到後方服務；Tunnel 是通道機制；遠端桌面則是操作另一台電腦。它們可能搭配，但不是彼此替代名稱。",
+        "Tunnel 目標仍要填正確的本機服務位址／Port。主機關機、來源程式停止或通道中斷，服務仍可能不可用。"
+      ],
+      "example": "Client 放網站空間，Server 和 SQL 在測試電腦；HTTPS API 經 Tunnel 到 Server，Server 內部再存取資料庫。資料庫不必因此公開。",
+      "trap": "隱藏某個服務的來源 IP，不會抹除以前公開的紀錄，也不會自動隱藏同一 IP 上其他直接對外服務。",
+      "flow": [
+        "瀏覽器連網域",
+        "平台公開入口",
+        "已建立的 Tunnel",
+        "本機 Server",
+        "內部資料庫"
+      ],
+      "related": [
+        "network",
+        "security",
+        "runtime"
+      ]
+    },
+    {
+      "id": "assets",
+      "title": "素材、GRF、壓縮與按需載入",
+      "lead": "檔案儲存空間不必然懂檔案格式；能解析它的是程式。",
+      "points": [
+        "ZIP／GRF 是封裝或壓縮容器；HTML／JS 是網頁產物；圖片與音效是素材。支援下載一個檔案，不等於能讀取其中每個項目。",
+        "roBrowser 可以涉及讀取使用者選擇的本機遊戲檔，或向 Remote Client 素材服務要求個別資源；實際能力取決於版本與設定。",
+        "素材服務可讀取 GRF、抽出資源再回傳；靜態託管則通常提供已準備好的檔案。不能把依賴 PHP 的服務原封不動放進只支援靜態檔案的平台。",
+        "一次預載入與邊玩邊載入是取捨：前者等待較集中，後者首開較輕但後續可能仍需下載。壓縮減少傳輸，不代表解壓、解碼與記憶體成本消失。"
+      ],
+      "example": "RO Client 可以先下載完整素材再玩；瀏覽器遊戲也可預載或分段取素材。把所有素材壓成一大包，不一定比按需載入更快。",
+      "trap": "檔案加密／壓縮不等於後端權限控制；提供給 Client 使用的資料，不能當成永遠不可被檢視的秘密。",
+      "flow": [
+        "素材來源",
+        "封裝／轉換",
+        "檔案託管或素材服務",
+        "下載／快取",
+        "解析／解碼",
+        "顯示或播放"
+      ],
+      "related": [
+        "cache",
+        "runtime",
+        "performance"
+      ]
+    },
+    {
+      "id": "cache",
+      "title": "快取、容量、頻寬與流量",
+      "lead": "容量是放多少；速率是傳多快；流量是總共傳多少。",
+      "points": [
+        "100 MB 的資源被完整下載 1,000 次，約產生 100 GB 的資料傳輸量；這是十進位簡化估算，不含協定開銷，也未扣除快取重用。",
+        "Mbps 是每秒百萬 bit，MB/s 是每秒百萬 byte；忽略開銷時 8 bit = 1 byte。不要把頻寬數字當成可無限制下載的總額。",
+        "瀏覽器快取可重用已取回的回應；是否重用受快取標頭、版本、重新驗證、空間與清除影響。CDN 快取和玩家裝置快取位於不同地方。",
+        "快取不是備份。更新程式要兼顧快取失效與版本一致性，避免舊 HTML 搭新 JS 或資源被刪除造成載入失敗。"
+      ],
+      "example": "同一份 Client 放不同下載空間，不會改變程式演算法；但空間或網路速度會影響下載和未快取素材的取得。",
+      "trap": "「沒有固定單站儲存上限」不等於帳號流量、請求或費用無限。平台配額應查當時方案，不套用其他平台的數字。",
+      "flow": [
+        "第一次請求",
+        "下載資源",
+        "依規則保存快取",
+        "下次重用或重新驗證",
+        "過期／更新則重新取得"
+      ],
+      "related": [
+        "hosting",
+        "performance",
+        "operations"
+      ]
+    },
+    {
+      "id": "performance",
+      "title": "慢在哪裡？先分 FPS、載入、網路與後端",
+      "lead": "都叫 lag，根因可能完全不同，換機房不會包治百病。",
+      "points": [
+        "畫面掉幀：看 Client 演算法、主執行緒工作、渲染、素材解碼、GPU 與記憶體。即使已下載完仍可能卡。",
+        "開頁或素材等待：看檔案體積、請求數、網路速率、伺服器回應、快取與載入策略。",
+        "操作晚反應：看網路往返延遲、丟包、後端排隊、遊戲 tick、資料庫查詢與鎖競爭。",
+        "閃退或頁面崩潰：看錯誤日誌、記憶體不足、版本相容、外掛與驅動。不要只從「用了哪家託管」下結論。"
+      ],
+      "example": "不同年份的 RO EXE 可能有不同程式實作與相容性；同一份 EXE 從不同下載空間取得，則不是換了程式版本。網頁 Client 也同理。",
+      "trap": "正確比較要固定版本、裝置、場景與設定，再量測首載時間、FPS、記憶體、API 延遲等，不能只用一次主觀感覺判定。",
+      "flow": [
+        "先描述症狀",
+        "固定測試條件",
+        "量測 Client／網路／Server",
+        "找瓶頸",
+        "修改後再比較"
+      ],
+      "related": [
+        "runtime",
+        "cache",
+        "operations"
+      ]
+    },
+    {
+      "id": "security",
+      "title": "信任邊界：看得見不等於有權改",
+      "lead": "後端必須驗證請求，不能把玩家介面當成安全防線。",
+      "points": [
+        "身分驗證確認你是誰；授權確認你能做什麼。隱藏按鈕不等於撤銷後端權限。",
+        "HTTPS 加密傳輸；輸入驗證、權限檢查、參數化 SQL、限流與稽核分別解決不同問題。不能因為用了 HTTPS 就省略其他層。",
+        "遊戲若要求公平，Server 要掌握權威狀態與規則；只把 Client 自報的傷害、勝利和掉落存進 SQL，資料雖在伺服器卻仍可被假請求影響。",
+        "資料庫應採最小權限與適當網路隔離；秘密金鑰不要放進前端、公開 repo 或可下載的設定檔。安全設計也需要修補與備份復原。"
+      ],
+      "example": "購物網站應由後端查商品價格、驗證餘額與庫存；不能因為瀏覽器送出「價格 1 元」就照單全收。",
+      "trap": "Server 權威不是「所有畫面每一幀都寫 SQL」；即時狀態可在記憶體計算，重要結果與資產變更再可靠保存。",
+      "flow": [
+        "不可信 Client 請求",
+        "認證與授權",
+        "規則／資料驗證",
+        "交易與去重",
+        "可信狀態與稽核"
+      ],
+      "related": [
+        "database",
+        "protocol",
+        "operations"
+      ]
+    },
+    {
+      "id": "reverse",
+      "title": "位址、DLL、反編譯與反組譯",
+      "lead": "位置要先講清楚是哪種座標；逆向工具也不能把產物完美變回原始專案。",
+      "points": [
+        "IP 位址是網路層的位置；URL／路徑是資源或檔案位置；記憶體位址是執行中行程的位址空間。相同數字出現在不同脈絡不代表同一物件。",
+        "偏移量是相對基準的位置差；指標是可用來指向資料或函式的值。更新版本、編譯最佳化與位址配置可能使固定位置失效。",
+        "在 Windows PE 分析中，VA 是載入後的虛擬位址，RVA 是相對映像基底的位址，file offset 是檔案中的位移。RVA 通常不等於磁碟 offset，需依區段映射換算；有些記憶體內容也未必有對應的檔案位元組。",
+        "DLL 是可被程式載入的動態函式庫。擴充需要符合介面、位元架構、呼叫慣例與版本，掛載不代表一定相容或穩定。",
+        "反組譯把機器碼呈現成組合語言；反編譯推回較高階的表示。註解、變數名、建置環境和部分結構可能已遺失，結果不是原作者原始碼的完整還原。"
+      ],
+      "example": "同樣是補丁，修改某版 Client 的固定偏移位置，通常不能假設適用所有年份 EXE。對照版本、備份與測試比「位址看起來一樣」可靠。",
+      "trap": "這裡說明概念與合法相容性研究，不提供繞過授權、偷取資料或破壞他人服務的操作教學。",
+      "flow": [
+        "原始碼",
+        "編譯與最佳化",
+        "機器碼產物",
+        "反組譯／反編譯分析",
+        "推測結構而非完整原碼"
+      ],
+      "related": [
+        "lifecycle",
+        "runtime",
+        "security"
+      ]
+    },
+    {
+      "id": "repository",
+      "title": "Repo、Git、更新器與部署版本",
+      "lead": "Repo 管的是檔案歷史；正式網站跑哪一版，要另有發布流程。",
+      "points": [
+        "Git 記錄變更；GitHub 是託管與協作平台之一；GitHub Pages 是網站發布服務。三者有關，但不是一個功能。",
+        "分支用來隔離工作，commit 記錄變更，PR 用來審查與討論。合併後是否自動上線，取決於工作流程設定。",
+        "更新器把適當版本的 Client 或素材傳到使用者裝置；網頁也需要版本與快取策略，不是上傳了就保證每位使用者立刻載入同一版。",
+        "開發、測試與正式環境應有清楚界線。測試用資料庫、服務 URL、金鑰與設定不應誤用正式環境。"
+      ],
+      "example": "把純靜態 HTML／CSS／JS 放進 repo，可以用 GitHub Pages 發布，也可以複製到既有網站子目錄。這份站點使用相對路徑，降低搬家成本。",
+      "trap": "刪分支不等於刪掉已合併的功能；回退程式也不一定能自動回退資料庫格式，兩者需要各自的遷移計畫。",
+      "flow": [
+        "分支修改",
+        "測試與審查",
+        "合併／標記版本",
+        "發布產物",
+        "檢查線上版本",
+        "必要時回復"
+      ],
+      "related": [
+        "lifecycle",
+        "hosting",
+        "operations"
+      ]
+    },
+    {
+      "id": "operations",
+      "title": "維運：啟動成功以後還有什麼？",
+      "lead": "可靠運作靠可觀測、可恢復、可更新，而不是只靠「現在能開」。",
+      "points": [
+        "日誌記錄發生什麼；指標觀察延遲、錯誤率、資源用量；追蹤可串起跨服務請求。不要把密碼、完整 token 或不必要個資寫進日誌。",
+        "備份要考慮保存週期、異地副本與實際還原測試。同步可能把錯誤或刪除同步出去，所以不等於備份。",
+        "主機與 SQL 分離可獨立管理，但引入網路延遲與故障點；共用主機較簡單，卻會共用 CPU、記憶體、磁碟和故障風險。",
+        "服務管理、健康檢查、重啟策略、容量監控、告警與更新回復流程，才把「手動開機測試」推向可營運的系統。"
+      ],
+      "example": "搬機房不只複製資料夾：還要準備執行環境、依賴、網路入口、設定、資料庫備份還原與驗證；保留穩定網域能減少玩家端改動。",
+      "trap": "加機器不一定線性加速：單一鎖、慢查詢、資料一致性或串行計算都可能成為瓶頸。先量測再擴充。",
+      "flow": [
+        "部署",
+        "健康檢查",
+        "監控／日誌",
+        "發現異常",
+        "修復或回復",
+        "還原演練與改善"
+      ],
+      "related": [
+        "database",
+        "performance",
+        "security"
+      ]
+    },
+    {
+      "id": "cases",
+      "title": "把觀念放進 LINE、Facebook 與 RO",
+      "lead": "以下是教學用簡化流程，不是這些產品私有架構的宣稱。",
+      "points": [
+        "訊息 App：裝置收集文字 → 後端驗證與路由 → 對方裝置收到更新。已送出、伺服器接受、已送達、已讀可能是不同狀態；加密方式會改變誰能讀取內容。",
+        "社群貼文：Client 上傳圖片與文字 → 後端檢查權限／處理媒體／保存記錄 → 其他使用者取得貼文。圖片儲存與資料庫記錄可以分工，不代表圖片必須直接放進 SQL。",
+        "RO：Client 發送操作 → Login／Char／Map 等服務依各自職責處理 → Client 呈現收到的狀態。具體責任邊界依使用的端與版本為準。",
+        "純靜態作品集：HTML／CSS／JS 與圖片即可提供閱讀；若新增會員、付款或跨裝置收藏，就可能需要額外的服務與資料保存設計。"
+      ],
+      "example": "先挑一個動作，例如「發一張圖」「買一個道具」，逐步問：誰輸入？誰驗證？在哪裡算？存什麼？怎麼回傳？斷線怎麼辦？",
+      "trap": "產品名稱不是架構答案。不同規模、版本與需求可以採不同實作，不要把概念示意當成廠商官方內部設計。",
+      "flow": [
+        "一個使用者動作",
+        "Client 呈現／送出",
+        "Server 驗證／處理",
+        "持久資料與素材",
+        "回應／推送其他裝置"
+      ],
+      "related": [
+        "roles",
+        "protocol",
+        "security"
+      ]
+    }
+  ],
+  "terms": [
+    {
+      "id": "term-1",
+      "term": "原始碼",
+      "aliases": "Source code,src",
+      "definition": "人撰寫、可維護的程式表示。",
+      "confusion": "不是正在運行的行程，也不必然可由 EXE 完整還原。",
+      "chapter": "lifecycle"
+    },
+    {
+      "id": "term-2",
+      "term": "編譯",
+      "aliases": "Compile,Compiler",
+      "definition": "把程式表示轉換成另一種形式的處理。",
+      "confusion": "不等於整個建置、部署或啟動流程。",
+      "chapter": "lifecycle"
+    },
+    {
+      "id": "term-3",
+      "term": "建置",
+      "aliases": "Build",
+      "definition": "把原碼與依賴轉成可測試或交付產物的流程。",
+      "confusion": "可能含編譯、打包、素材轉換，不只產生 EXE。",
+      "chapter": "lifecycle"
+    },
+    {
+      "id": "term-4",
+      "term": "執行環境",
+      "aliases": "Runtime",
+      "definition": "執行程式需要的引擎、函式庫或平台環境。",
+      "confusion": "同一原碼在不同環境不保證相容。",
+      "chapter": "runtime"
+    },
+    {
+      "id": "term-5",
+      "term": "行程",
+      "aliases": "Process",
+      "definition": "作業系統中一個正在執行的程式實例。",
+      "confusion": "不是檔案本身；同一程式可開多個行程。",
+      "chapter": "runtime"
+    },
+    {
+      "id": "term-6",
+      "term": "執行緒",
+      "aliases": "Thread",
+      "definition": "行程內的一條執行流程。",
+      "confusion": "多執行緒不保證所有工作都更快。",
+      "chapter": "performance"
+    },
+    {
+      "id": "term-7",
+      "term": "EXE",
+      "aliases": "Executable",
+      "definition": "Windows 常見的可執行檔形式。",
+      "confusion": "副檔名不保證包含全部設定、素材或依賴。",
+      "chapter": "lifecycle"
+    },
+    {
+      "id": "term-8",
+      "term": "DLL",
+      "aliases": "Dynamic-link library",
+      "definition": "程式可動態載入使用的函式庫。",
+      "confusion": "不是任意版本都可互換的擴充包。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-9",
+      "term": "BAT",
+      "aliases": "Batch file",
+      "definition": "Windows 批次指令腳本。",
+      "confusion": "通常是啟動或管理流程，不是網站服務本體。",
+      "chapter": "lifecycle"
+    },
+    {
+      "id": "term-10",
+      "term": "前端",
+      "aliases": "Frontend",
+      "definition": "使用者介面與裝置端互動相關職責。",
+      "confusion": "管理後台的頁面也有前端。",
+      "chapter": "roles"
+    },
+    {
+      "id": "term-11",
+      "term": "後端",
+      "aliases": "Backend",
+      "definition": "處理服務規則、權限與資料存取的部分。",
+      "confusion": "不是只有 SQL，也不等於一個管理頁面。",
+      "chapter": "roles"
+    },
+    {
+      "id": "term-12",
+      "term": "管理後台",
+      "aliases": "Admin console",
+      "definition": "供管理者操作的介面與功能。",
+      "confusion": "介面是前端，執行管理規則仍需要後端。",
+      "chapter": "roles"
+    },
+    {
+      "id": "term-13",
+      "term": "客戶端",
+      "aliases": "Client",
+      "definition": "在互動中使用另一方服務的程式。",
+      "confusion": "不必然是 EXE，瀏覽器和後端程式也可扮演 Client。",
+      "chapter": "roles"
+    },
+    {
+      "id": "term-14",
+      "term": "伺服器",
+      "aliases": "Server",
+      "definition": "提供服務的程式；口語也指承載它的主機。",
+      "confusion": "主機位置與程式角色要分開。",
+      "chapter": "map"
+    },
+    {
+      "id": "term-15",
+      "term": "API",
+      "aliases": "Application programming interface",
+      "definition": "程式公開給其他程式使用的介面。",
+      "confusion": "不一定是網路 API，也不是資料庫的同義詞。",
+      "chapter": "protocol"
+    },
+    {
+      "id": "term-16",
+      "term": "資料庫",
+      "aliases": "Database,DB",
+      "definition": "依一定結構保存與查詢資料的系統或資料集合。",
+      "confusion": "SQL 語言與管理工具都不是資料庫本體。",
+      "chapter": "database"
+    },
+    {
+      "id": "term-17",
+      "term": "SQL",
+      "aliases": "Structured query language",
+      "definition": "查詢與操作關聯式資料庫的語言。",
+      "confusion": "不同資料庫的語法與能力不完全相同。",
+      "chapter": "database"
+    },
+    {
+      "id": "term-18",
+      "term": "MariaDB",
+      "aliases": "MySQL family",
+      "definition": "一種關聯式資料庫系統。",
+      "confusion": "不是所有 .sql 都能不修改直接匯入。",
+      "chapter": "database"
+    },
+    {
+      "id": "term-19",
+      "term": "SQLite",
+      "aliases": "Embedded database",
+      "definition": "可嵌入應用程式的資料庫引擎，常用檔案保存資料。",
+      "confusion": "不等於所有資料庫都是一個可隨意複製的 .db。",
+      "chapter": "database"
+    },
+    {
+      "id": "term-20",
+      "term": "JSON",
+      "aliases": "JavaScript Object Notation",
+      "definition": "以物件、陣列等表示資料的文字格式。",
+      "confusion": "不是看到 JSON 就代表沒有使用資料庫。",
+      "chapter": "database"
+    },
+    {
+      "id": "term-21",
+      "term": "交易",
+      "aliases": "Transaction",
+      "definition": "讓一組資料操作依資料庫規則一起完成的單位。",
+      "confusion": "仍需設計業務規則、隔離與重試。",
+      "chapter": "database"
+    },
+    {
+      "id": "term-22",
+      "term": "冪等",
+      "aliases": "Idempotency",
+      "definition": "同一操作重試時避免產生額外重複效果的性質。",
+      "confusion": "不是只要有 operation ID 就自然做到。",
+      "chapter": "security"
+    },
+    {
+      "id": "term-23",
+      "term": "網域",
+      "aliases": "Domain name",
+      "definition": "網路命名系統中的名稱。",
+      "confusion": "買網域不等於買主機或網站。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-24",
+      "term": "DNS",
+      "aliases": "Domain Name System",
+      "definition": "查詢名稱對應紀錄的系統。",
+      "confusion": "解析成功不表示服務已啟動。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-25",
+      "term": "IP 位址",
+      "aliases": "IP address",
+      "definition": "網路通訊中識別介面的位址。",
+      "confusion": "不是檔案路徑，也不是永久不變的身分。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-26",
+      "term": "連接埠",
+      "aliases": "Port",
+      "definition": "傳輸協定用來區分端點服務的編號。",
+      "confusion": "有設定號碼不等於程式有監聽或防火牆有放行。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-27",
+      "term": "本機回環",
+      "aliases": "Loopback,localhost,127.0.0.1",
+      "definition": "指向發起連線主機自己的介面。",
+      "confusion": "玩家裝置的 localhost 不是開發者電腦。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-28",
+      "term": "內網位址",
+      "aliases": "Private address,LAN",
+      "definition": "供私有網路使用、不直接在公網路由的位址範圍。",
+      "confusion": "不能只把它寄給外地朋友就期待能連。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-29",
+      "term": "公開位址",
+      "aliases": "Public address,WAN",
+      "definition": "能在公用網路路由的位址。",
+      "confusion": "公開不等於任何服務都能穿過防火牆。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-30",
+      "term": "NAT",
+      "aliases": "Network Address Translation",
+      "definition": "網路位址轉換機制。",
+      "confusion": "不是加密，也不等於完整安全防護。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-31",
+      "term": "Port 轉發",
+      "aliases": "Port forwarding",
+      "definition": "把指定入口的連線導向另一個內部端點。",
+      "confusion": "不能解決程式未啟動或協定不相容。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-32",
+      "term": "防火牆",
+      "aliases": "Firewall",
+      "definition": "依規則允許或阻擋網路通訊。",
+      "confusion": "不是資料備份或應用程式權限檢查的替代品。",
+      "chapter": "security"
+    },
+    {
+      "id": "term-33",
+      "term": "HTTP",
+      "aliases": "Hypertext Transfer Protocol",
+      "definition": "網站常見的請求與回應協定。",
+      "confusion": "不限於傳 HTML，也可傳 JSON 或圖片。",
+      "chapter": "protocol"
+    },
+    {
+      "id": "term-34",
+      "term": "HTTPS",
+      "aliases": "HTTP over TLS",
+      "definition": "透過 TLS 保護的 HTTP。",
+      "confusion": "保護傳輸不代表對方服務可信或沒有漏洞。",
+      "chapter": "security"
+    },
+    {
+      "id": "term-35",
+      "term": "WebSocket",
+      "aliases": "WS,WSS",
+      "definition": "支援持續雙向訊息傳輸的通訊機制。",
+      "confusion": "不是自帶多人遊戲同步與反作弊。",
+      "chapter": "protocol"
+    },
+    {
+      "id": "term-36",
+      "term": "封包",
+      "aliases": "Packet,message",
+      "definition": "網路資料單位；遊戲語境也可能指應用訊息。",
+      "confusion": "TCP 一次讀取不一定是一個完整遊戲訊息。",
+      "chapter": "protocol"
+    },
+    {
+      "id": "term-37",
+      "term": "協定",
+      "aliases": "Protocol",
+      "definition": "通訊雙方遵守的格式與行為規則。",
+      "confusion": "只匹配 IP／Port 不代表訊息格式相容。",
+      "chapter": "protocol"
+    },
+    {
+      "id": "term-38",
+      "term": "序列化",
+      "aliases": "Serialization",
+      "definition": "把資料結構轉成可保存或傳輸的表示。",
+      "confusion": "不是加密；接收端還要解析與驗證。",
+      "chapter": "protocol"
+    },
+    {
+      "id": "term-39",
+      "term": "Tunnel",
+      "aliases": "隧道,cloudflared",
+      "definition": "將通訊透過另一條連線承載的機制。",
+      "confusion": "不是免費運算主機，也不自動適用任意原生遊戲。",
+      "chapter": "tunnel"
+    },
+    {
+      "id": "term-40",
+      "term": "反向代理",
+      "aliases": "Reverse proxy",
+      "definition": "在服務前接請求，再轉送到後方服務。",
+      "confusion": "跟遠端桌面不是同一用途。",
+      "chapter": "tunnel"
+    },
+    {
+      "id": "term-41",
+      "term": "CDN",
+      "aliases": "Content delivery network",
+      "definition": "由分散節點協助傳遞內容的網路。",
+      "confusion": "CDN 快取不是每位玩家裝置的快取。",
+      "chapter": "cache"
+    },
+    {
+      "id": "term-42",
+      "term": "快取",
+      "aliases": "Cache",
+      "definition": "為重用而暫存資料，減少重複取得或計算。",
+      "confusion": "可能過期、被清除，不等於永久備份。",
+      "chapter": "cache"
+    },
+    {
+      "id": "term-43",
+      "term": "頻寬",
+      "aliases": "Bandwidth",
+      "definition": "通道可承載的資料速率能力。",
+      "confusion": "與每月總流量 GB 不同。",
+      "chapter": "cache"
+    },
+    {
+      "id": "term-44",
+      "term": "流量",
+      "aliases": "Data transfer",
+      "definition": "一段期間內實際傳輸的資料量。",
+      "confusion": "不是硬碟剩餘容量。",
+      "chapter": "cache"
+    },
+    {
+      "id": "term-45",
+      "term": "延遲",
+      "aliases": "Latency,RTT",
+      "definition": "操作或通訊等待所花的時間；RTT 是往返時間。",
+      "confusion": "不等於下載速率或畫面 FPS。",
+      "chapter": "performance"
+    },
+    {
+      "id": "term-46",
+      "term": "幀率",
+      "aliases": "FPS",
+      "definition": "每秒呈現的影格數。",
+      "confusion": "快取完成或換下載空間不一定能改善它。",
+      "chapter": "performance"
+    },
+    {
+      "id": "term-47",
+      "term": "Tick",
+      "aliases": "Simulation tick",
+      "definition": "伺服器或遊戲邏輯更新的步進。",
+      "confusion": "不必與畫面 FPS 一樣，也不代表每次都寫 SQL。",
+      "chapter": "performance"
+    },
+    {
+      "id": "term-48",
+      "term": "記憶體",
+      "aliases": "RAM",
+      "definition": "執行中程式使用的工作空間。",
+      "confusion": "不是硬碟容量，通常不當作斷電後永久保存。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-49",
+      "term": "記憶體位址",
+      "aliases": "Memory address",
+      "definition": "行程位址空間中指向內容的位置。",
+      "confusion": "不是可直接拿來連網的 IP。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-50",
+      "term": "偏移量",
+      "aliases": "Offset",
+      "definition": "相對某個基準的位置差。",
+      "confusion": "換版本或基準後，原偏移可能無效。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-51",
+      "term": "指標",
+      "aliases": "Pointer",
+      "definition": "可用來指向資料或函式的值。",
+      "confusion": "不是保證永遠有效的固定地址。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-52",
+      "term": "檔案路徑",
+      "aliases": "File path",
+      "definition": "檔案系統中資源的定位方式。",
+      "confusion": "本機路徑不會自動成為朋友可開啟的網址。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-53",
+      "term": "URL",
+      "aliases": "Uniform Resource Locator",
+      "definition": "包含協定、主機與路徑等資訊的資源定位表示。",
+      "confusion": "路徑部分不必直接對應硬碟目錄。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-54",
+      "term": "反編譯",
+      "aliases": "Decompile",
+      "definition": "從產物推回較高階的程式表示。",
+      "confusion": "通常無法完整還原原始命名、註解與專案。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-55",
+      "term": "反組譯",
+      "aliases": "Disassemble",
+      "definition": "把機器碼轉為組合語言表示。",
+      "confusion": "不是自動理解程式意圖。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-56",
+      "term": "GRF",
+      "aliases": "Game Resource File",
+      "definition": "RO 常見的遊戲素材封裝格式。",
+      "confusion": "託管可下載不等於主機自動懂得抽取素材。",
+      "chapter": "assets"
+    },
+    {
+      "id": "term-57",
+      "term": "靜態網站",
+      "aliases": "Static website",
+      "definition": "可由事先準備的 HTML、CSS、JS 等檔案提供的網站。",
+      "confusion": "仍可有瀏覽器端互動，不代表只能顯示死文字。",
+      "chapter": "hosting"
+    },
+    {
+      "id": "term-58",
+      "term": "cPanel",
+      "aliases": "Hosting control panel",
+      "definition": "管理網站主機服務的控制介面。",
+      "confusion": "不是 FTP 協定，也不能只靠名稱判定主機品質。",
+      "chapter": "hosting"
+    },
+    {
+      "id": "term-59",
+      "term": "FTP／SFTP",
+      "aliases": "File transfer",
+      "definition": "不同的檔案傳輸方式；SFTP 透過 SSH 提供服務。",
+      "confusion": "不是網站空間本體，FTP 與 SFTP 不是同一協定。",
+      "chapter": "hosting"
+    },
+    {
+      "id": "term-60",
+      "term": "VPS",
+      "aliases": "Virtual private server",
+      "definition": "由虛擬化提供的伺服器環境。",
+      "confusion": "控制權與資源保障依方案，不等於獨享整台實體機。",
+      "chapter": "hosting"
+    },
+    {
+      "id": "term-61",
+      "term": "Git",
+      "aliases": "Version control",
+      "definition": "記錄與管理檔案版本的工具。",
+      "confusion": "不是 GitHub，也不自動部署網站。",
+      "chapter": "repository"
+    },
+    {
+      "id": "term-62",
+      "term": "Repo",
+      "aliases": "Repository,儲存庫",
+      "definition": "保存專案檔案及版本資訊的地方。",
+      "confusion": "不是正在執行的服務。",
+      "chapter": "repository"
+    },
+    {
+      "id": "term-63",
+      "term": "Commit",
+      "aliases": "提交",
+      "definition": "一次記錄在版本歷史中的變更。",
+      "confusion": "已提交不等於已推送或已上線。",
+      "chapter": "repository"
+    },
+    {
+      "id": "term-64",
+      "term": "PR",
+      "aliases": "Pull request",
+      "definition": "供審查與合併變更的協作請求。",
+      "confusion": "建立 PR 不等於已合併或已發布。",
+      "chapter": "repository"
+    },
+    {
+      "id": "term-65",
+      "term": "CI／CD",
+      "aliases": "Continuous integration,delivery,deployment",
+      "definition": "自動驗證與交付／部署流程的概念。",
+      "confusion": "工具綠燈不代表所有實際畫面與操作都測過。",
+      "chapter": "repository"
+    },
+    {
+      "id": "term-66",
+      "term": "認證",
+      "aliases": "Authentication",
+      "definition": "確認請求者身分。",
+      "confusion": "已登入不等於有所有操作權限。",
+      "chapter": "security"
+    },
+    {
+      "id": "term-67",
+      "term": "授權",
+      "aliases": "Authorization",
+      "definition": "判斷身分是否可以執行某個操作。",
+      "confusion": "不能只靠前端隱藏按鈕。",
+      "chapter": "security"
+    },
+    {
+      "id": "term-68",
+      "term": "Server 權威",
+      "aliases": "Server authoritative",
+      "definition": "由伺服器維護並決定可信狀態與結果。",
+      "confusion": "只收 Client 成果存 SQL 還不算完整戰鬥權威。",
+      "chapter": "security"
+    },
+    {
+      "id": "term-69",
+      "term": "備份",
+      "aliases": "Backup",
+      "definition": "為故障或誤操作準備的可復原資料副本。",
+      "confusion": "需要實測還原；同步不等於備份。",
+      "chapter": "operations"
+    },
+    {
+      "id": "term-70",
+      "term": "日誌",
+      "aliases": "Log",
+      "definition": "記錄事件與診斷資訊的資料。",
+      "confusion": "不能把秘密或不必要個資隨便寫進去。",
+      "chapter": "operations"
+    },
+    {
+      "id": "term-71",
+      "term": "Rust",
+      "aliases": "Programming language",
+      "definition": "一種系統程式語言。",
+      "confusion": "不是 RustDesk 遠端工具。",
+      "chapter": "runtime"
+    },
+    {
+      "id": "term-72",
+      "term": "RustDesk",
+      "aliases": "Remote desktop",
+      "definition": "用來遠端控制其他裝置的軟體。",
+      "confusion": "遠端操作不會把被控端程式搬來本機執行。",
+      "chapter": "runtime"
+    },
+    {
+      "id": "term-73",
+      "term": "HTML",
+      "aliases": "HyperText Markup Language",
+      "definition": "描述網頁內容與結構的標記語言。",
+      "confusion": "不是資料庫，也不是用來處理所有後端規則的語言。",
+      "chapter": "roles"
+    },
+    {
+      "id": "term-74",
+      "term": "CSS",
+      "aliases": "Cascading Style Sheets",
+      "definition": "描述網頁外觀、排版與響應式呈現的樣式語言。",
+      "confusion": "更換 CSS 通常不會替你修正後端資料規則。",
+      "chapter": "roles"
+    },
+    {
+      "id": "term-75",
+      "term": "JavaScript",
+      "aliases": "JS",
+      "definition": "可在瀏覽器或支援的其他執行環境使用的程式語言。",
+      "confusion": "不是只能寫前端，也不是 Java 的簡稱。",
+      "chapter": "lifecycle"
+    },
+    {
+      "id": "term-76",
+      "term": "PHP",
+      "aliases": "Server-side scripting",
+      "definition": "常用於伺服器端網頁處理的程式語言。",
+      "confusion": "上傳 PHP 到純靜態空間不代表它會被執行。",
+      "chapter": "hosting"
+    },
+    {
+      "id": "term-77",
+      "term": "Node.js",
+      "aliases": "JavaScript runtime",
+      "definition": "讓 JavaScript 在瀏覽器外執行的環境。",
+      "confusion": "不是資料庫，也不代表所有網頁都要常駐 Node 服務。",
+      "chapter": "lifecycle"
+    },
+    {
+      "id": "term-78",
+      "term": "框架",
+      "aliases": "Framework",
+      "definition": "提供一組結構與慣例，協助組織應用程式的工具。",
+      "confusion": "不是選了新框架就自然得到效能、安全與完整功能。",
+      "chapter": "lifecycle"
+    },
+    {
+      "id": "term-79",
+      "term": "VA／RVA",
+      "aliases": "Virtual address,Relative virtual address",
+      "definition": "PE 分析中的虛擬位址與相對映像基底位址。",
+      "confusion": "RVA 不可直接當成磁碟檔案 offset；需依區段等資訊對應。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-80",
+      "term": "檔案偏移",
+      "aliases": "File offset",
+      "definition": "相對檔案起點的位元組位置。",
+      "confusion": "不是執行中行程的記憶體位址，也不是原碼行號。",
+      "chapter": "reverse"
+    },
+    {
+      "id": "term-81",
+      "term": "物件儲存",
+      "aliases": "Object storage,R2,S3",
+      "definition": "透過物件鍵與介面保存並取得檔案資料的服務類型。",
+      "confusion": "不是通用程式執行主機，也不自動解析 GRF。",
+      "chapter": "hosting"
+    },
+    {
+      "id": "term-82",
+      "term": "受管服務",
+      "aliases": "Managed service",
+      "definition": "由供應商負責部分基礎設施與維護工作的服務。",
+      "confusion": "不等於使用者不必管理資料權限、程式或備份需求。",
+      "chapter": "operations"
+    },
+    {
+      "id": "term-83",
+      "term": "監聽",
+      "aliases": "Listen,binding",
+      "definition": "服務在指定介面與 Port 等候連線。",
+      "confusion": "監聽成功不等於外部路由和防火牆已允許抵達。",
+      "chapter": "network"
+    },
+    {
+      "id": "term-84",
+      "term": "TLS",
+      "aliases": "Transport Layer Security",
+      "definition": "保護通訊機密性與完整性並支援端點驗證的協定。",
+      "confusion": "不是應用權限或資料庫輸入驗證。",
+      "chapter": "security"
+    },
+    {
+      "id": "term-85",
+      "term": "Cloudflare D1",
+      "aliases": "D1,Serverless SQL",
+      "definition": "採 SQLite SQL 語意、由 Cloudflare 託管的資料庫服務。",
+      "confusion": "不是 MariaDB，也不代表你的資料庫一定在自己 CF 帳號；需查實際部署與資源歸屬。",
+      "chapter": "database"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Client 放 Sites 跟放機房，會讓遊戲更順嗎？",
+      "answer": "同一版本的程式不會只因為換下載位置就改善演算法。託管主要影響載入與素材取得；已載入後的 FPS、網路互動與後端處理須分開量測。",
+      "chapter": "performance"
+    },
+    {
+      "question": "Client 放在伺服器上，那不是 Server 嗎？",
+      "answer": "檔案儲存地點不是程式角色。網站服務把 Client 檔案送到使用者瀏覽器，Client 可以在使用者裝置執行，然後連另一個遊戲服務。",
+      "chapter": "roles"
+    },
+    {
+      "question": "快取之後是不是永遠不用下載？",
+      "answer": "不是。快取規則、版本更新、過期、裝置空間或清除都可能造成重新取得；尚未載入的素材仍需要下載。",
+      "chapter": "cache"
+    },
+    {
+      "question": "用 Tunnel 還要設定 Port 嗎？",
+      "answer": "需要指定來源服務真正監聽的 Port，但不一定需要一般路由器入站轉發。來源程式和通道都要運作，非 HTTP 的用法也不同。",
+      "chapter": "tunnel"
+    },
+    {
+      "question": "127.0.0.1 是我電腦嗎？",
+      "answer": "是發起連線的那台主機自己。寫在伺服器資料庫設定與寫在玩家瀏覽器 API 設定，指向的可能不是同一台。",
+      "chapter": "network"
+    },
+    {
+      "question": "資料都在 SQL，就不會被改 Client 作弊嗎？",
+      "answer": "不保證。如果後端接受偽造的勝利、掉落或金錢請求，仍可能寫入錯誤結果。要由後端驗證規則、權限並維護可信狀態。",
+      "chapter": "security"
+    },
+    {
+      "question": "JSON 跟 SQL 哪個才是我的 DB？",
+      "answer": "JSON 是格式，SQL 是語言；需要看實際程式把資料保存在哪裡。JSON 可以存在檔案，也可以存在關聯式資料庫欄位內。",
+      "chapter": "database"
+    },
+    {
+      "question": "網站有互動就一定需要後端嗎？",
+      "answer": "不一定。搜尋這份知識庫、篩選與切換頁籤可在瀏覽器完成；跨裝置共同資料、會員權限與可靠交易通常需要服務端設計。",
+      "chapter": "hosting"
+    },
+    {
+      "question": "把 GRF 上傳到網站就能給 roBrowser 用嗎？",
+      "answer": "不一定。要有版本相容的解析方式與載入流程；可能由瀏覽器讀本機檔，也可能由 Remote Client 服務抽出素材回傳。",
+      "chapter": "assets"
+    },
+    {
+      "question": "RustDesk 遠端操作，程式吃哪台電腦資源？",
+      "answer": "在被控電腦啟動的程式主要消耗被控端資源；操控端還需接收與解碼畫面。網路出口與紀錄則要依實際代理和連線設定判斷。",
+      "chapter": "runtime"
+    },
+    {
+      "question": "反編譯是不是就拿回原作者 src？",
+      "answer": "通常不是。可以推得較高階表示，但最佳化、命名、註解和建置資訊可能已遺失，需要分析且未必可重建原專案。",
+      "chapter": "reverse"
+    },
+    {
+      "question": "搬機房是不是只改 IP 就好？",
+      "answer": "如果整套環境相同可能很接近，但仍需驗證依賴、設定、服務啟動、網路、資料庫與備份。穩定網域可降低客戶端改動，不代表後端設定不用改。",
+      "chapter": "operations"
+    }
+  ],
+  "sources": [
+    {
+      "id": "web",
+      "title": "Web 的運作方式",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works",
+      "scope": "前後端、Client 與 Web 基礎"
+    },
+    {
+      "id": "cache",
+      "title": "HTTP 快取",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching",
+      "scope": "重用、重新驗證與快取不是永久保證"
+    },
+    {
+      "id": "pages",
+      "title": "GitHub Pages 官方介紹",
+      "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages",
+      "scope": "靜態託管與 repository 的關係"
+    },
+    {
+      "id": "rustdesk",
+      "title": "RustDesk 自架說明",
+      "url": "https://rustdesk.com/docs/en/self-host/",
+      "scope": "遠端工具與自架服務"
+    },
+    {
+      "id": "tunnel",
+      "title": "Cloudflare Tunnel 支援協定",
+      "url": "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/protocols/",
+      "scope": "HTTP 與非 HTTP 存取方式不同"
+    },
+    {
+      "id": "robrowser",
+      "title": "roBrowser 官方入門",
+      "url": "https://www.robrowser.com/getting-started",
+      "scope": "本機遊戲檔與 Remote Client 素材服務"
+    },
+    {
+      "id": "rust",
+      "title": "Rust 官方書籍",
+      "url": "https://doc.rust-lang.org/book/",
+      "scope": "Rust 語言與編譯概念"
+    },
+    {
+      "id": "ra",
+      "title": "rAthena 原始碼",
+      "url": "https://github.com/rathena/rathena",
+      "scope": "開源 RO Server 的實作參考；依版本閱讀"
+    },
+    {
+      "id": "auth",
+      "title": "OWASP Authorization Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "scope": "後端授權與最小權限"
+    },
+    {
+      "id": "sql",
+      "title": "MariaDB 官方文件",
+      "url": "https://mariadb.com/docs/server",
+      "scope": "資料庫引擎與交易參考"
+    },
+    {
+      "id": "pe",
+      "title": "Microsoft PE 格式",
+      "url": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+      "scope": "VA、RVA 與檔案 offset"
+    },
+    {
+      "id": "tcp",
+      "title": "RFC 9293：TCP",
+      "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+      "scope": "位元組串流與應用訊息分界"
+    },
+    {
+      "id": "cpanel",
+      "title": "cPanel 管理介面",
+      "url": "https://docs.cpanel.net/cpanel/the-cpanel-interface/the-cpanel-interface/",
+      "scope": "面板與實際主機服務的區別"
+    },
+    {
+      "id": "workers",
+      "title": "Cloudflare Workers",
+      "url": "https://developers.cloudflare.com/workers/",
+      "scope": "受管應用執行環境"
+    },
+    {
+      "id": "rds",
+      "title": "Amazon RDS 文件",
+      "url": "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/",
+      "scope": "受管關聯式資料庫服務"
+    },
+    {
+      "id": "r2",
+      "title": "Cloudflare R2 文件",
+      "url": "https://developers.cloudflare.com/r2/",
+      "scope": "物件儲存與執行環境的區別"
+    },
+    {
+      "id": "d1",
+      "title": "Cloudflare D1 官方概覽",
+      "url": "https://developers.cloudflare.com/d1/",
+      "scope": "受管資料庫、SQLite SQL 語意與存取方式"
+    }
+  ]
+};

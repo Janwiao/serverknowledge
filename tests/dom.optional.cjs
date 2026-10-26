@@ -1,0 +1,17 @@
+const {JSDOM}=require('jsdom');
+const fs=require('fs'),assert=require('node:assert/strict');
+const p=require('node:path').resolve(__dirname,'..')+'/';
+const dom=new JSDOM(fs.readFileSync(p+'index.html','utf8'),{runScripts:'outside-only',url:'https://example.test/personal/knowledge/'});
+const w=dom.window; w.HTMLElement.prototype.scrollIntoView=function(){};w.print=()=>{};
+w.eval(fs.readFileSync(p+'data/knowledge.js','utf8'));w.eval(fs.readFileSync(p+'assets/app.js','utf8'));
+const d=w.document, data=w.SOFTWARE_ATLAS;
+assert.equal(d.querySelectorAll('.chapter').length,data.chapters.length);
+assert.equal(d.querySelectorAll('.term').length,data.terms.length);
+const inp=d.querySelector('#search');inp.value='RustDesk';inp.dispatchEvent(new w.Event('input'));assert(d.querySelectorAll('.term:not([hidden])').length>=1);assert(d.querySelectorAll('.term:not([hidden])').length<data.terms.length);
+inp.value='qqq不存在zzzz';inp.dispatchEvent(new w.Event('input'));assert.equal(d.querySelectorAll('.term:not([hidden])').length,0);assert.equal(d.querySelector('#no-results').hidden,false);
+d.querySelector('#clear').click();assert.equal(d.querySelectorAll('.term:not([hidden])').length,data.terms.length);
+w.history.replaceState(null,'','#chapter-reverse');w.dispatchEvent(new w.HashChangeEvent('hashchange'));assert.equal(d.querySelector('#chapter-reverse').open,true);
+inp.value='SQL';inp.dispatchEvent(new w.Event('input'));let before=[...d.querySelectorAll('.term')].map(x=>x.hidden);w.dispatchEvent(new w.Event('beforeprint'));assert.equal(d.querySelectorAll('.term:not([hidden])').length,data.terms.length);assert([...d.querySelectorAll('details')].every(x=>x.open));w.dispatchEvent(new w.Event('afterprint'));assert.deepEqual([...d.querySelectorAll('.term')].map(x=>x.hidden),before);
+for(const a of d.querySelectorAll('a[href^="#"]'))assert(d.getElementById(a.hash.slice(1)),a.hash);
+assert([...d.querySelectorAll('#sources-list a')].every(x=>x.protocol==='https:'&&x.rel.includes('noopener')));
+console.log('PASS: rendering, search, no results, reset, chapter hash, print restore, anchors, source links');dom.window.close();
