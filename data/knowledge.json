@@ -1,8 +1,8 @@
 {
   "title": "透視軟體",
   "subtitle": "從程式碼到上線，把軟體背後的每一層看清楚。",
-  "version": "0.2.0",
-  "updated": "2026-11-03（本次新增即時檔案分享；非全站重新查核）",
+  "version": "0.3.0",
+  "updated": "2026-11-03（增補即時分享與 PDF 知識；非全站重新查核）",
   "chapters": [
     {
       "id": "map",
@@ -489,6 +489,96 @@
         "file-sharing",
         "cache",
         "security"
+      ]
+    },
+    {
+      "id": "pdf-basics",
+      "title": "PDF 編輯先分清：原文、註記、頁面與 OCR",
+      "lead": "PDF 通常是固定版面文件，不是保證可以像 Word 一樣重排的原始稿。選工具前，先辨別要改的是哪一層。",
+      "flow": [
+        "保留原始檔副本",
+        "辨別文字型或掃描型 PDF",
+        "確認操作類型",
+        "編輯／OCR／整理頁面",
+        "另存並逐頁檢查"
+      ],
+      "points": [
+        "原文編輯：改動 PDF 已有的文字或圖片物件。字型、分欄、公式或物件切割方式可能讓修改後排版移位；若有原始 Word／ODT／排版檔，優先回原稿修改再輸出。",
+        "註記與加字：螢光標示、便條、手寫、畫線或新增文字框，通常不等於改掉底下的原文。閱讀器標示「可編輯」時，要看它指註記還是真正文字編輯。",
+        "頁面操作：合併、分割、抽頁、旋轉、重新排序或壓縮，與修改一行文字是不同能力；不能因為工具能合併 PDF 就認定能改原文。",
+        "OCR（光學字元辨識）：從掃描圖片辨識文字，可增加搜尋／複製文字層或轉成可編輯格式；不保證原版面、表格、公式、繁體中文及數字全部正確。",
+        "填寫表單是輸入既有欄位；製作表單是新增欄位與驗證規則。貼一張簽名圖片、電子簽署流程與憑證式數位簽章也不是同一件事。",
+        "遮住文字不代表刪除文字：白色框、黑色框或螢光筆可能仍保留底下可複製的內容。需要去識別化時用真正的遮蔽／刪除敏感內容功能，再檢查文字搜尋、複製及中繼資料。",
+        "驗收至少看：頁數、頁面順序、中文字型、表格邊界、公式、超連結與表單。曾經簽署的 PDF 修改後可能影響簽章驗證，勿只看畫面正常就當成文件完全相同。"
+      ],
+      "example": "在講義上劃重點用註記；把三份公開說明書合成一份用頁面工具；更正自己文件的原句才需要原文編輯；純掃描頁要先 OCR 才方便搜尋。",
+      "trap": "OCR 不是 AI 摘要，摘要不是原文；「能加字」不等於「能替換原文字」。用副本驗證，避免覆蓋唯一原稿。",
+      "related": [
+        "pdf-tools",
+        "pdf-ai-selfhost",
+        "assets",
+        "security"
+      ]
+    },
+    {
+      "id": "pdf-tools",
+      "title": "PDF 工具怎麼選：免費、開源與自架各有分工",
+      "lead": "2026-11-03 官方資料查核。先按工作選工具，再看授權與資料流；免費、開源、離線、自架是四個不同維度。",
+      "flow": [
+        "閱讀／註記或原文編輯？",
+        "頁面整理或 OCR？",
+        "單機或多人自架？",
+        "核對授權／功能／資料流",
+        "用副本測試輸出"
+      ],
+      "points": [
+        "Adobe Acrobat Reader｜免費閱讀、註記與填寫既有表單。改原本文字、合併、建立表單等進階工作屬 Acrobat 付費功能；不是 Reader 免費功能。各地價格與 OCR／進階能力需查當前方案。",
+        "Microsoft Edge｜內建 PDF 閱讀器可閱讀、手寫、標示、文字便條與基本表單填寫。適合快速閱讀註記，不應把加字或便條當作完整替換原文的編輯器。",
+        "PDFgear｜目前提供免費桌面 PDF 原文編輯、頁面工具及 OCR 等功能，但屬專有軟體，不是開源專案。官方線上編輯器主要加字、註記與頁面整理，替換既有文字需桌面版。各平台功能不應假設完全一致。",
+        "LibreOffice Draw｜免費開源桌面工具，可匯入 PDF 後以文字／圖形物件方式修改再匯出，適合嘗試小幅修改。它不是保證完全保真的 PDF 專業排版器；字型、複雜表格和斷行需逐頁檢查，也不能把掃描圖片直接當成文字物件。",
+        "PDFsam Basic｜免費開源、本機處理的合併、分割、旋轉、抽頁與混合頁面工具。不是完整原文編輯器，也不要把 PDFsam Enhanced 的付費編輯／OCR 能力算到 Basic；Visual、Enhanced 是不同產品。",
+        "Stirling PDF｜可在瀏覽器、桌面或自架伺服器使用，提供合併、分割、壓縮、轉換、OCR、註記等；現行文件也有 PDF Text Editor 可改既有文字與圖片，但提醒字型和版面可能移位。採 open-core，不是所有企業功能或 AI 處理都無限制免費。",
+        "PdfDing｜偏向自架 PDF 收藏管理與跨裝置閱讀，支援閱讀進度、標籤及加字／標示／繪圖註記。不是以完整原文排版修改為核心；GitHub 舊倉庫已封存並導向 Codeberg，找維護版本要跟官方新位置。",
+        "DocuSeal｜開源電子簽署與表單流程工具，適合建立填寫／簽署欄位、收集簽署及管理流程；有自架及商業服務。不是 Acrobat 式通用原文編輯器，也不是掃描辨識工具；功能與授權範圍依版本。",
+        "選擇捷徑｜只讀和註記先用 Edge／Reader；要免費改原文可先試 PDFgear 或 Draw；只合併拆頁用 PDFsam Basic；想集中自架多種處理用 Stirling；想管理閱讀庫看 PdfDing；簽署流程看 DocuSeal。這是用途分類，不是逐款安裝實測排名。"
+      ],
+      "example": "一套 PDFsam Basic 加一個閱讀器，就可能解決抽頁、合併和註記；只有需要改原句或 OCR 時，才需要增加對應工具，不必每次都購買最完整套件。",
+      "trap": "免費不等於開源；開源不等於全部商業功能免費；自架不等於不用維護；同一品牌的網頁版、桌面版與不同方案不能混為一談。官方來源集中於本頁參考來源。",
+      "related": [
+        "pdf-basics",
+        "pdf-ai-selfhost",
+        "hosting",
+        "operations"
+      ]
+    },
+    {
+      "id": "pdf-ai-selfhost",
+      "title": "PDF 的 AI 與隱私：自架也要追資料去了哪裡",
+      "lead": "「裝在自己的電腦」只描述軟體位置；文件、提示詞與向量化文字是否送往第三方，要按每個功能與設定查核。",
+      "flow": [
+        "文件進入工具",
+        "文字擷取／OCR",
+        "本機或外部嵌入模型建立索引",
+        "本機或外部語言模型回答",
+        "檢查輸出／清除暫存與權限"
+      ],
+      "points": [
+        "先畫資料流：一般編輯、進階轉檔、OCR、AI 摘要和同步可能走不同路徑。某個網頁工具在瀏覽器本機處理，不代表同品牌所有 AI 或轉檔功能也不上傳。",
+        "PDFgear 隱私政策寫明：使用 AI 功能並在應用程式明確同意後，可能將 PDF 內容、聊天文字與必要中繼資料傳給 Microsoft Azure OpenAI Service。官方另說部分進階轉檔可能使用雲端運算。不要宣稱整套 PDFgear 完全離線或零外傳。",
+        "Stirling PDF 的自架 AI 預設關閉。啟用後可選自己執行 AI 引擎，或使用 Stirling Cloud AI；自己執行引擎仍可連到外部模型供應商，不等於模型就在自己電腦。",
+        "自架 Stirling 的語言模型供應商可能收到提示詞、相關文件內容、對話歷史與檔名；嵌入模型供應商可能收到文件文字及搜尋查詢。使用 Stirling Cloud AI 時，內容會交給 Stirling Cloud。",
+        "想把文件 AI 處理留在自有網路，語言模型和嵌入模型兩邊都要選本機端點，例如官方支援的 Ollama，並檢查引擎、OCR、儲存、日誌及其他整合。只把聊天模型改成本機仍可能從向量化步驟外傳。",
+        "Stirling 現行自架 Free 方案列 5 位使用者；企業功能與方案另分。官方說非 Enterprise 的 AI／Processor 等處理仍受月額度影響，即使自備引擎與供應商金鑰也不能直接理解成無限免費；需另計模型 API 或本機硬體成本。",
+        "自架仍要管理登入、HTTPS、更新、備份、暫存清理及分享權限；不要把 AI 引擎直接暴露到公網。此章是選型與資料流知識，不是已替你部署、開放連線或設定 API 金鑰。",
+        "AI 回答可能漏頁、誤讀表格或編造細節。需要提交或正式使用時核對原文頁碼、引用、日期和數值；敏感資料先確認你有權交給該服務，而不是看到「安全」標語就上傳。"
+      ],
+      "example": "PDF 工具部署在自己的主機，但嵌入設定使用外部 API 時，全文仍可能先傳到外部做索引。追蹤「文件 → OCR → 向量 → 模型 → 儲存」比只問是不是自架更準確。",
+      "trap": "自架應用程式、自架 AI 引擎、本機語言模型、本機嵌入模型是不同層。預設關閉 AI 也不代表所有更新檢查、遙測或自選外部整合都不存在。",
+      "related": [
+        "pdf-tools",
+        "security",
+        "hosting",
+        "operations"
       ]
     }
   ],
@@ -1268,6 +1358,110 @@
       "definition": "Wormhole｜最多 10GB、免帳號、預設 E2EE。5GB 以下可託管 24 小時；超過 5GB 採 P2P，寄件分頁必須持續開啟直到對方下載。免費下載次數上限與可購買的 Pro 方案本次未確認。",
       "confusion": "規則為 2026-11-03 快照；以官方當前方案及建立傳送時提示為準。",
       "chapter": "file-transfer-services"
+    },
+    {
+      "id": "term-98",
+      "term": "PDF 原文編輯",
+      "aliases": "PDF text editing",
+      "definition": "改 PDF 裡已存在的文字或圖片物件，可能受字型與物件布局影響。",
+      "confusion": "與新增文字框或註記不同。",
+      "chapter": "pdf-basics"
+    },
+    {
+      "id": "term-99",
+      "term": "PDF 註記",
+      "aliases": "Annotation,螢光標示,便條",
+      "definition": "在文件上加入標示、便條、繪圖或說明。",
+      "confusion": "不保證改動底層原文字，也不是安全遮蔽。",
+      "chapter": "pdf-basics"
+    },
+    {
+      "id": "term-100",
+      "term": "OCR",
+      "aliases": "光學字元辨識,Optical Character Recognition",
+      "definition": "從掃描或圖片辨識文字，支援搜尋、複製或後續編輯。",
+      "confusion": "不等於 AI 摘要，且辨識和版面還原都可能出錯。",
+      "chapter": "pdf-basics"
+    },
+    {
+      "id": "term-101",
+      "term": "Open-core",
+      "aliases": "開放核心,開源核心",
+      "definition": "核心開放，部分功能、服務或企業能力另外授權的產品模式。",
+      "confusion": "不能因 repo 公開就推論整套所有功能免費或適用同一授權。",
+      "chapter": "pdf-tools"
+    },
+    {
+      "id": "term-102",
+      "term": "PDF AI 資料流",
+      "aliases": "AI privacy,RAG,embedding,本機模型",
+      "definition": "追蹤文件擷取、向量化、語言模型與儲存分別在哪裡執行、由誰接收內容。",
+      "confusion": "自架前端或引擎不保證模型和嵌入處理都在本地。",
+      "chapter": "pdf-ai-selfhost"
+    },
+    {
+      "id": "term-103",
+      "term": "Adobe Acrobat Reader",
+      "aliases": "PDF,編輯,註記,工具",
+      "definition": "Adobe Acrobat Reader｜免費閱讀、註記與填寫既有表單。改原本文字、合併、建立表單等進階工作屬 Acrobat 付費功能；不是 Reader 免費功能。各地價格與 OCR／進階能力需查當前方案。",
+      "confusion": "先分原文編輯、註記、頁面管理與 OCR；功能及授權為 2026-11-03 查核快照。",
+      "chapter": "pdf-tools"
+    },
+    {
+      "id": "term-104",
+      "term": "Microsoft Edge",
+      "aliases": "PDF,編輯,註記,工具",
+      "definition": "Microsoft Edge｜內建 PDF 閱讀器可閱讀、手寫、標示、文字便條與基本表單填寫。適合快速閱讀註記，不應把加字或便條當作完整替換原文的編輯器。",
+      "confusion": "先分原文編輯、註記、頁面管理與 OCR；功能及授權為 2026-11-03 查核快照。",
+      "chapter": "pdf-tools"
+    },
+    {
+      "id": "term-105",
+      "term": "PDFgear",
+      "aliases": "PDF,編輯,註記,工具",
+      "definition": "PDFgear｜目前提供免費桌面 PDF 原文編輯、頁面工具及 OCR 等功能，但屬專有軟體，不是開源專案。官方線上編輯器主要加字、註記與頁面整理，替換既有文字需桌面版。各平台功能不應假設完全一致。",
+      "confusion": "先分原文編輯、註記、頁面管理與 OCR；功能及授權為 2026-11-03 查核快照。",
+      "chapter": "pdf-tools"
+    },
+    {
+      "id": "term-106",
+      "term": "LibreOffice Draw",
+      "aliases": "PDF,編輯,註記,工具",
+      "definition": "LibreOffice Draw｜免費開源桌面工具，可匯入 PDF 後以文字／圖形物件方式修改再匯出，適合嘗試小幅修改。它不是保證完全保真的 PDF 專業排版器；字型、複雜表格和斷行需逐頁檢查，也不能把掃描圖片直接當成文字物件。",
+      "confusion": "先分原文編輯、註記、頁面管理與 OCR；功能及授權為 2026-11-03 查核快照。",
+      "chapter": "pdf-tools"
+    },
+    {
+      "id": "term-107",
+      "term": "PDFsam Basic",
+      "aliases": "PDF,編輯,註記,工具",
+      "definition": "PDFsam Basic｜免費開源、本機處理的合併、分割、旋轉、抽頁與混合頁面工具。不是完整原文編輯器，也不要把 PDFsam Enhanced 的付費編輯／OCR 能力算到 Basic；Visual、Enhanced 是不同產品。",
+      "confusion": "先分原文編輯、註記、頁面管理與 OCR；功能及授權為 2026-11-03 查核快照。",
+      "chapter": "pdf-tools"
+    },
+    {
+      "id": "term-108",
+      "term": "Stirling PDF",
+      "aliases": "PDF,編輯,註記,工具",
+      "definition": "Stirling PDF｜可在瀏覽器、桌面或自架伺服器使用，提供合併、分割、壓縮、轉換、OCR、註記等；現行文件也有 PDF Text Editor 可改既有文字與圖片，但提醒字型和版面可能移位。採 open-core，不是所有企業功能或 AI 處理都無限制免費。",
+      "confusion": "先分原文編輯、註記、頁面管理與 OCR；功能及授權為 2026-11-03 查核快照。",
+      "chapter": "pdf-tools"
+    },
+    {
+      "id": "term-109",
+      "term": "PdfDing",
+      "aliases": "PDF,編輯,註記,工具",
+      "definition": "PdfDing｜偏向自架 PDF 收藏管理與跨裝置閱讀，支援閱讀進度、標籤及加字／標示／繪圖註記。不是以完整原文排版修改為核心；GitHub 舊倉庫已封存並導向 Codeberg，找維護版本要跟官方新位置。",
+      "confusion": "先分原文編輯、註記、頁面管理與 OCR；功能及授權為 2026-11-03 查核快照。",
+      "chapter": "pdf-tools"
+    },
+    {
+      "id": "term-110",
+      "term": "DocuSeal",
+      "aliases": "PDF,編輯,註記,工具",
+      "definition": "DocuSeal｜開源電子簽署與表單流程工具，適合建立填寫／簽署欄位、收集簽署及管理流程；有自架及商業服務。不是 Acrobat 式通用原文編輯器，也不是掃描辨識工具；功能與授權範圍依版本。",
+      "confusion": "先分原文編輯、註記、頁面管理與 OCR；功能及授權為 2026-11-03 查核快照。",
+      "chapter": "pdf-tools"
     }
   ],
   "faq": [
@@ -1345,6 +1539,26 @@
       "question": "傳幾十 GB 素材前，最值得先測什麼？",
       "answer": "先用小包確認所在地可用、上下載速度、資料夾結構、下載完整性、斷線後行為與收件端操作。這份比較沒有做 TB 級實測，不能保證不中斷或最快。",
       "chapter": "file-sharing"
+    },
+    {
+      "question": "PDF 能加文字，為什麼改不了原句？",
+      "answer": "加字可能只是新增文字框；修改既有文字需要原文編輯器。掃描頁則可能只有圖片，需先 OCR；即使能編輯，也要檢查字型和排版。",
+      "chapter": "pdf-basics"
+    },
+    {
+      "question": "PDFgear 是免費開源嗎？",
+      "answer": "免費和開源要分開。PDFgear 目前提供免費工具，但屬專有軟體；官方保留未來對部分進階功能收費的可能。不要從同名第三方 GitHub 倉庫推論官方開源。",
+      "chapter": "pdf-tools"
+    },
+    {
+      "question": "Stirling PDF 自架之後，AI 就完全在本機嗎？",
+      "answer": "不一定。自架引擎可以連外部模型與嵌入 API；想留在自有網路，要同時選本機語言模型及本機嵌入模型，再檢查其他整合與日誌。",
+      "chapter": "pdf-ai-selfhost"
+    },
+    {
+      "question": "要合併 PDF 一定得買 Adobe 嗎？",
+      "answer": "不用。PDFsam Basic 是免費開源的本機頁面工具；Stirling 也有相關功能。它們的用途和付費 Acrobat 全套能力不同，先按任務挑選。",
+      "chapter": "pdf-tools"
     }
   ],
   "sources": [
@@ -1554,6 +1768,101 @@
       "title": "Wormhole 安全設計",
       "url": "https://wormhole.app/security",
       "scope": "本次查核 2026-11-03：端對端加密與金鑰處理。"
+    },
+    {
+      "title": "Adobe Reader 與進階編輯",
+      "url": "https://helpx.adobe.com/reader/desktop/open-edit-or-delete-pdfs.html",
+      "scope": "PDF 知識查核 2026-11-03：區分免費 Reader 與 Acrobat 進階編輯。"
+    },
+    {
+      "title": "Microsoft Edge PDF 閱讀器",
+      "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-pdf",
+      "scope": "PDF 知識查核 2026-11-03：閱讀、註記與基本表單，不等同完整原文編輯。"
+    },
+    {
+      "title": "PDFgear 線上編輯器",
+      "url": "https://www.pdfgear.com/edit-pdf/",
+      "scope": "PDF 知識查核 2026-11-03：線上加字與桌面替換既有文字的差別。"
+    },
+    {
+      "title": "PDFgear 費用說明",
+      "url": "https://www.pdfgear.com/insights/is-pdfgear-free.htm",
+      "scope": "PDF 知識查核 2026-11-03：現行免費與未來進階收費可能、部分進階雲端轉檔。"
+    },
+    {
+      "title": "PDFgear 軟體條款",
+      "url": "https://www.pdfgear.com/terms-conditions/",
+      "scope": "PDF 知識查核 2026-11-03：專有軟體授權，不以免費推論開源。"
+    },
+    {
+      "title": "PDFgear 隱私政策",
+      "url": "https://www.pdfgear.com/privacy/",
+      "scope": "PDF 知識查核 2026-11-03：AI 同意、Azure OpenAI 接收資料類型。"
+    },
+    {
+      "title": "LibreOffice 官方網站",
+      "url": "https://www.libreoffice.org/",
+      "scope": "PDF 知識查核 2026-11-03：免費開源套件與 Draw。"
+    },
+    {
+      "title": "LibreOffice Draw 官方指南",
+      "url": "https://books.libreoffice.org/en/DG262/DG26201-IntroducingDraw.html",
+      "scope": "PDF 知識查核 2026-11-03：Draw 的物件式圖形編輯與用途。"
+    },
+    {
+      "title": "PDFsam Basic 官方功能",
+      "url": "https://pdfsam.org/pdfsam-basic/",
+      "scope": "PDF 知識查核 2026-11-03：本機開源頁面整理工具。"
+    },
+    {
+      "title": "PDFsam 各產品區別",
+      "url": "https://pdfsam.org/",
+      "scope": "PDF 知識查核 2026-11-03：Basic、Visual 與 Enhanced 不同功能／授權。"
+    },
+    {
+      "title": "Stirling PDF 官方倉庫",
+      "url": "https://github.com/Stirling-Tools/Stirling-PDF",
+      "scope": "PDF 知識查核 2026-11-03：open-core、工具與部署模式。"
+    },
+    {
+      "title": "Stirling PDF 原文編輯",
+      "url": "https://docs.stirlingpdf.com/Tools/Guides/Content-Editing/",
+      "scope": "PDF 知識查核 2026-11-03：現行文字／圖片編輯及字型排版限制。"
+    },
+    {
+      "title": "Stirling 自架方案與授權",
+      "url": "https://docs.stirlingpdf.com/Server/Licensing/Plans-and-Licences/",
+      "scope": "PDF 知識查核 2026-11-03：Free 5 人、付費功能與處理額度。"
+    },
+    {
+      "title": "Stirling 自架 AI 選項",
+      "url": "https://docs.stirlingpdf.com/Server/AI/",
+      "scope": "PDF 知識查核 2026-11-03：預設關閉、自備引擎與 Cloud AI。"
+    },
+    {
+      "title": "Stirling AI 模型供應商",
+      "url": "https://docs.stirlingpdf.com/Server/AI/Model-Providers/",
+      "scope": "PDF 知識查核 2026-11-03：語言模型與嵌入模型可用不同供應商。"
+    },
+    {
+      "title": "Stirling AI 安全與資料流",
+      "url": "https://docs.stirlingpdf.com/Server/AI/AI-Security/",
+      "scope": "PDF 知識查核 2026-11-03：文件、提示詞、向量化文字、引擎保護。"
+    },
+    {
+      "title": "PdfDing 舊倉庫及官方搬遷公告",
+      "url": "https://github.com/mrmn2/PdfDing",
+      "scope": "PDF 知識查核 2026-11-03：PDF 管理閱讀、註記與 Codeberg 新位置。"
+    },
+    {
+      "title": "PdfDing 現行原始碼入口",
+      "url": "https://codeberg.org/mrmn/PdfDing",
+      "scope": "PDF 知識查核 2026-11-03：由官方舊倉庫指向的維護位置。"
+    },
+    {
+      "title": "DocuSeal 官方倉庫",
+      "url": "https://github.com/docusealco/docuseal",
+      "scope": "PDF 知識查核 2026-11-03：開源電子簽署與表單流程定位。"
     }
   ]
 }
