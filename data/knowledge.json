@@ -1,8 +1,8 @@
 {
   "title": "透視軟體",
   "subtitle": "從程式碼到上線，把軟體背後的每一層看清楚。",
-  "version": "0.1.0",
-  "updated": "2026-10-27",
+  "version": "0.2.0",
+  "updated": "2026-11-03（本次新增即時檔案分享；非全站重新查核）",
   "chapters": [
     {
       "id": "map",
@@ -428,6 +428,66 @@
       "related": [
         "roles",
         "protocol",
+        "security"
+      ]
+    },
+    {
+      "id": "file-sharing",
+      "title": "即時檔案分享：上傳連結、雲端硬碟與 P2P",
+      "lead": "這類工具重點是把一批檔案交給對方，不是讓每個人都裝好同步軟體。先看接收方式，再比較容量。",
+      "flow": [
+        "選取檔案與資料夾",
+        "上傳至暫存服務或建立 P2P 連線",
+        "設定期限／密碼／下載次數",
+        "分享連結",
+        "收件下載並確認完整性"
+      ],
+      "points": [
+        "託管式傳送：先把檔案上傳到服務商，對方再下載。上傳完成後通常不必一直保持你的電腦開機；但要確認服務確實完成接收，而非只是先給你連結。",
+        "P2P 點對點：檔案可能直接從寄件裝置傳到收件裝置，雙方必須同時在線。Wormhole 超過 5GB 時採這種方式，寄件分頁要保持開啟。",
+        "比較五種限制：單次大小、每月總量、傳送次數、每筆下載次數及保存期限。它們是不同計數，10 位收件人不等於只能下載 10 次。",
+        "「不限大小」不是保證無限速度或無限容量永久儲存。排隊、網路穩定性、瀏覽器限制、公平使用政策與訂閱失效規則仍可能影響使用。",
+        "TLS 保護傳輸路徑；靜態加密保護儲存資料；端對端加密（E2EE）則要看金鑰是否只在端點。可設分享密碼不代表服務商不能解密，SSE-C 仍是伺服器端加密。",
+        "大型資料夾先用小包測試：確認相對路徑、完整下載、斷線後行為及收件端限制，再傳整批。可附 SHA-256 雜湊值檢查下載完整性；雜湊相符本身不證明來源安全。",
+        "既有雲端硬碟分享通常指向你帳號內的檔案；臨時傳檔通常建立有期限的獨立傳送。命名相近的 pCloud Transfer 和 pCloud 網盤、Transfer.it 和 MEGA 雲端，是不同產品與配額。"
+      ],
+      "example": "交付 25GB 的遊戲測試客戶端，可以選有足夠單次額度的託管服務，設定短期連結並附版本與雜湊；若採 P2P，就先約好雙方在線時間。只分享自己有權交付的內容。",
+      "trap": "即時分享是方便交付，不是資料同步，也不是替遠端網盤自動搬檔；服務是否支援跨雲匯入需另查。加密也不會自動讓收到的可執行檔安全。",
+      "related": [
+        "file-transfer-services",
+        "cache",
+        "security",
+        "operations"
+      ]
+    },
+    {
+      "id": "file-transfer-services",
+      "title": "八款即時分享服務：免費容量、期限與限制",
+      "lead": "2026-11-03 官方資料快照。以下聚焦免費使用；方案、地區限制和促銷可能改變，付款或大量上傳前再看官方頁。",
+      "flow": [
+        "確認檔案大小",
+        "確認對方何時下載",
+        "檢查次數／期限／地區",
+        "選擇加密方式",
+        "先做小量測試"
+      ],
+      "points": [
+        "Transfer.it｜單次大小、檔案數及傳送次數不設上限，免帳號，預設 90 天。目前優惠期下載次數不限；官方比較頁預告全功能免費至 2027-03-01，之後免費每筆 100 次下載，Pro €2.99／月為未來方案展示，不是已核實目前結帳價。採服務端管理金鑰，非 E2EE。",
+        "Transfer.it 付費期限｜無期限檔案隨有效訂閱保留，訂閱結束後最多再保留 30 天；政策以超過 2TB 的無期限儲存為公平使用限制例子，不應寫成硬性 2TB 容量上限或無限永久保存承諾。",
+        "SwissTransfer｜每次 50GB，免費最多 250 次下載，收送免註冊，可能需驗證寄件信箱。免費選 30 天時，詳細 FAQ 說先保留 15 天，第 12 天寄通知、需在其後 3 天內延長至 30 天；付費 Enterprise 最長 60 天。非 E2EE。部分歐洲外地區不能建立傳送，台灣本次未實測。",
+        "WeTransfer｜免費需寄件帳號、收件免帳號；每個滾動 30 天最多 10 次，且總計最多 3GB，先碰到任一限制就停，不是每次 3GB 無限傳。每筆最多保留 3 天。付費升級另看當前方案，別沿用舊版 2GB／7 天說法。",
+        "Smash｜免費不設硬性大小上限，免註冊，但超過 2GB 非優先處理、可能排隊。現行方案頁寫免費 7 天，官方另一份 FAQ 寫最多 14 天；以建立連結時顯示為準。免費下載次數上限未核實，不標為無限。",
+        "Filemail｜免費每次 5GB、每 24 小時 2 次、保留 7 天；免費 Basic 方案列每筆 10 次下載，可免註冊。免費傳輸中有加密，但官方說一般靜態檔案不加密；Business 的 E2EE 需雙方使用桌面程式，不能套到免費網頁版。",
+        "TransferNow｜免費每次 5GB、保留 7 天、免註冊；免費確切下載次數上限未查明。付費 Premium／Team 分別可傳 250GB／500GB、最長 365 天；付費 SSE-C 是伺服器端加密，非 E2EE。",
+        "pCloud Transfer｜免費每次 5GB、保留 7 天、最多寄給 10 個信箱，收送免註冊但可能要驗證寄件信箱。10 位收件人不是 10 次下載。這是獨立工具，不是 pCloud 網盤容量升級；本次未核實現行 E2EE 保證。",
+        "Wormhole｜最多 10GB、免帳號、預設 E2EE。5GB 以下可託管 24 小時；超過 5GB 採 P2P，寄件分頁必須持續開啟直到對方下載。免費下載次數上限與可購買的 Pro 方案本次未確認。",
+        "選擇方向｜20～50GB 整包檔案可比較 Transfer.it 與 SwissTransfer（先確認所在地可用）；更大資料可先測 Transfer.it 或能接受排隊的 Smash；敏感小包可看 Wormhole。以上不是台灣速度或穩定性的實測排名。"
+      ],
+      "example": "一包 1GB MV、多個檔案合計 40GB，以及每月反覆傳送 20 次，適合的方案可能完全不同。先算「一筆的總大小」和「一個月的總量」，再問對方能否在期限內下載。",
+      "trap": "免費服務政策變動快；資料未明列不代表不限。各服務官方說明與限制網址收在本頁「參考來源」，存在矛盾的規則已註明，不以舊部落格評測補成確定值。",
+      "related": [
+        "file-sharing",
+        "cache",
         "security"
       ]
     }
@@ -1112,6 +1172,102 @@
       "definition": "採 SQLite SQL 語意、由 Cloudflare 託管的資料庫服務。",
       "confusion": "不是 MariaDB，也不代表你的資料庫一定在自己 CF 帳號；需查實際部署與資源歸屬。",
       "chapter": "database"
+    },
+    {
+      "id": "term-86",
+      "term": "即時檔案分享",
+      "aliases": "File transfer,臨時傳檔,免空",
+      "definition": "把一批檔案透過有期限的連結交付給收件者。",
+      "confusion": "與同步硬碟、持久備份或跨雲搬運不同。",
+      "chapter": "file-sharing"
+    },
+    {
+      "id": "term-87",
+      "term": "端對端加密",
+      "aliases": "E2EE,End-to-end encryption",
+      "definition": "內容在端點加密，解密金鑰由預期端點掌握；服務商不應持有可解密內容的金鑰。",
+      "confusion": "TLS、靜態加密或分享密碼單獨都不足以證明 E2EE。",
+      "chapter": "file-sharing"
+    },
+    {
+      "id": "term-88",
+      "term": "下載額度與傳送額度",
+      "aliases": "Transfer quota,Download limit,流量",
+      "definition": "可能分別按位元組、傳送筆數、下載次數或滾動期間計算。",
+      "confusion": "單次 5GB 不表示每月無限傳；收件人數也不是下載次數。",
+      "chapter": "file-sharing"
+    },
+    {
+      "id": "term-89",
+      "term": "P2P 檔案傳送",
+      "aliases": "Peer-to-peer,點對點",
+      "definition": "裝置之間直接傳檔；依產品可能需要雙方同時在線及中繼協助。",
+      "confusion": "產生連結不代表檔案已完整留在服務商，關閉寄件頁可能讓下載中斷。",
+      "chapter": "file-sharing"
+    },
+    {
+      "id": "term-90",
+      "term": "Transfer.it",
+      "aliases": "即時分享,大檔傳送,File transfer",
+      "definition": "Transfer.it｜單次大小、檔案數及傳送次數不設上限，免帳號，預設 90 天。目前優惠期下載次數不限；官方比較頁預告全功能免費至 2027-03-01，之後免費每筆 100 次下載，Pro €2.99／月為未來方案展示，不是已核實目前結帳價。採服務端管理金鑰，非 E2EE。",
+      "confusion": "規則為 2026-11-03 快照；以官方當前方案及建立傳送時提示為準。",
+      "chapter": "file-transfer-services"
+    },
+    {
+      "id": "term-91",
+      "term": "SwissTransfer",
+      "aliases": "即時分享,大檔傳送,File transfer",
+      "definition": "SwissTransfer｜每次 50GB，免費最多 250 次下載，收送免註冊，可能需驗證寄件信箱。免費選 30 天時，詳細 FAQ 說先保留 15 天，第 12 天寄通知、需在其後 3 天內延長至 30 天；付費 Enterprise 最長 60 天。非 E2EE。部分歐洲外地區不能建立傳送，台灣本次未實測。",
+      "confusion": "規則為 2026-11-03 快照；以官方當前方案及建立傳送時提示為準。",
+      "chapter": "file-transfer-services"
+    },
+    {
+      "id": "term-92",
+      "term": "WeTransfer",
+      "aliases": "即時分享,大檔傳送,File transfer",
+      "definition": "WeTransfer｜免費需寄件帳號、收件免帳號；每個滾動 30 天最多 10 次，且總計最多 3GB，先碰到任一限制就停，不是每次 3GB 無限傳。每筆最多保留 3 天。付費升級另看當前方案，別沿用舊版 2GB／7 天說法。",
+      "confusion": "規則為 2026-11-03 快照；以官方當前方案及建立傳送時提示為準。",
+      "chapter": "file-transfer-services"
+    },
+    {
+      "id": "term-93",
+      "term": "Smash",
+      "aliases": "即時分享,大檔傳送,File transfer",
+      "definition": "Smash｜免費不設硬性大小上限，免註冊，但超過 2GB 非優先處理、可能排隊。現行方案頁寫免費 7 天，官方另一份 FAQ 寫最多 14 天；以建立連結時顯示為準。免費下載次數上限未核實，不標為無限。",
+      "confusion": "規則為 2026-11-03 快照；以官方當前方案及建立傳送時提示為準。",
+      "chapter": "file-transfer-services"
+    },
+    {
+      "id": "term-94",
+      "term": "Filemail",
+      "aliases": "即時分享,大檔傳送,File transfer",
+      "definition": "Filemail｜免費每次 5GB、每 24 小時 2 次、保留 7 天；免費 Basic 方案列每筆 10 次下載，可免註冊。免費傳輸中有加密，但官方說一般靜態檔案不加密；Business 的 E2EE 需雙方使用桌面程式，不能套到免費網頁版。",
+      "confusion": "規則為 2026-11-03 快照；以官方當前方案及建立傳送時提示為準。",
+      "chapter": "file-transfer-services"
+    },
+    {
+      "id": "term-95",
+      "term": "TransferNow",
+      "aliases": "即時分享,大檔傳送,File transfer",
+      "definition": "TransferNow｜免費每次 5GB、保留 7 天、免註冊；免費確切下載次數上限未查明。付費 Premium／Team 分別可傳 250GB／500GB、最長 365 天；付費 SSE-C 是伺服器端加密，非 E2EE。",
+      "confusion": "規則為 2026-11-03 快照；以官方當前方案及建立傳送時提示為準。",
+      "chapter": "file-transfer-services"
+    },
+    {
+      "id": "term-96",
+      "term": "pCloud Transfer",
+      "aliases": "即時分享,大檔傳送,File transfer",
+      "definition": "pCloud Transfer｜免費每次 5GB、保留 7 天、最多寄給 10 個信箱，收送免註冊但可能要驗證寄件信箱。10 位收件人不是 10 次下載。這是獨立工具，不是 pCloud 網盤容量升級；本次未核實現行 E2EE 保證。",
+      "confusion": "規則為 2026-11-03 快照；以官方當前方案及建立傳送時提示為準。",
+      "chapter": "file-transfer-services"
+    },
+    {
+      "id": "term-97",
+      "term": "Wormhole",
+      "aliases": "即時分享,大檔傳送,File transfer",
+      "definition": "Wormhole｜最多 10GB、免帳號、預設 E2EE。5GB 以下可託管 24 小時；超過 5GB 採 P2P，寄件分頁必須持續開啟直到對方下載。免費下載次數上限與可購買的 Pro 方案本次未確認。",
+      "confusion": "規則為 2026-11-03 快照；以官方當前方案及建立傳送時提示為準。",
+      "chapter": "file-transfer-services"
     }
   ],
   "faq": [
@@ -1174,6 +1330,21 @@
       "question": "搬機房是不是只改 IP 就好？",
       "answer": "如果整套環境相同可能很接近，但仍需驗證依賴、設定、服務啟動、網路、資料庫與備份。穩定網域可降低客戶端改動，不代表後端設定不用改。",
       "chapter": "operations"
+    },
+    {
+      "question": "有了下載連結，我就能關掉電腦嗎？",
+      "answer": "託管式服務通常要等完整上傳完成；P2P 可能仍要保持寄件裝置與分頁在線。Wormhole 超過 5GB 就需要寄件分頁持續開啟。",
+      "chapter": "file-sharing"
+    },
+    {
+      "question": "不限檔案大小，是不是也不限下載次數與保存時間？",
+      "answer": "不是。容量、總流量、傳送次數、每筆下載次數及保存期限要分開看；也要注意免費促銷到期後的變化。",
+      "chapter": "file-transfer-services"
+    },
+    {
+      "question": "傳幾十 GB 素材前，最值得先測什麼？",
+      "answer": "先用小包確認所在地可用、上下載速度、資料夾結構、下載完整性、斷線後行為與收件端操作。這份比較沒有做 TB 級實測，不能保證不中斷或最快。",
+      "chapter": "file-sharing"
     }
   ],
   "sources": [
@@ -1278,6 +1449,111 @@
       "title": "Cloudflare D1 官方概覽",
       "url": "https://developers.cloudflare.com/d1/",
       "scope": "受管資料庫、SQLite SQL 語意與存取方式"
+    },
+    {
+      "title": "Transfer.it FAQ",
+      "url": "https://transfer.it/faq",
+      "scope": "本次查核 2026-11-03：檔案大小、免帳號、90 天預設期限與服務定位。"
+    },
+    {
+      "title": "Transfer.it 方案比較",
+      "url": "https://transfer.it/compare",
+      "scope": "本次查核 2026-11-03：目前優惠與 2027-03-01 後方案預告；只採其自身資料。"
+    },
+    {
+      "title": "Transfer.it 隱私與保留政策",
+      "url": "https://transfer.it/privacy",
+      "scope": "本次查核 2026-11-03：訂閱結束後保留與大量無期限儲存公平使用。"
+    },
+    {
+      "title": "Transfer.it 條款",
+      "url": "https://transfer.it/terms",
+      "scope": "本次查核 2026-11-03：管理式加密金鑰與服務條款。"
+    },
+    {
+      "title": "SwissTransfer 詳細限制 FAQ",
+      "url": "https://www.infomaniak.com/en/support/faq/2929/understanding-swisstransfer-data-limits",
+      "scope": "本次查核 2026-11-03：50GB、30 天延長程序、250 次下載；FAQ 更新 2026-10-22。"
+    },
+    {
+      "title": "SwissTransfer 官方介紹",
+      "url": "https://www.swisstransfer.com/en",
+      "scope": "本次查核 2026-11-03：地區限制、傳輸與靜態加密，明確非 E2EE。"
+    },
+    {
+      "title": "WeTransfer 免費方案",
+      "url": "https://wetransfer.com/resources/free-file-transfer/wetransfer-free-plan",
+      "scope": "本次查核 2026-11-03：滾動 30 天 10 次及合計 3GB、帳號要求。"
+    },
+    {
+      "title": "WeTransfer 保存期限",
+      "url": "https://wetransfer.com/help-center/how-to/transfer-availability",
+      "scope": "本次查核 2026-11-03：免費與付費連結期限。"
+    },
+    {
+      "title": "Smash 方案比較",
+      "url": "https://fromsmash.com/pricing",
+      "scope": "本次查核 2026-11-03：免費保存期限以本頁 7 天保守列示。"
+    },
+    {
+      "title": "Smash 大小限制",
+      "url": "https://fromsmash.com/article/112-file-size-limit",
+      "scope": "本次查核 2026-11-03：超過 2GB 非優先處理。"
+    },
+    {
+      "title": "Smash 保存期限 FAQ",
+      "url": "https://fromsmash.com/help/articles/12952074-how-can-i-change-the-availability-period-of-my-transfer",
+      "scope": "本次查核 2026-11-03：與方案頁期限存在差異；以建立時顯示為準。"
+    },
+    {
+      "title": "Filemail 免費服務限制",
+      "url": "https://support.filemail.com/en/articles/4103694-free-file-sharing-service",
+      "scope": "本次查核 2026-11-03：5GB、每 24 小時 2 次、7 天與免註冊。"
+    },
+    {
+      "title": "Filemail 免費 Basic",
+      "url": "https://www1.filemail.com/plans/basic",
+      "scope": "本次查核 2026-11-03：免費每筆 10 次下載。"
+    },
+    {
+      "title": "Filemail 加密說明",
+      "url": "https://support.filemail.com/en/articles/9844738-is-data-encrypted-in-transit-and-at-rest",
+      "scope": "本次查核 2026-11-03：區分傳輸與靜態資料加密。"
+    },
+    {
+      "title": "Filemail E2EE 要求",
+      "url": "https://support.filemail.com/en/articles/10313859-end-to-end-encryption-with-filemail",
+      "scope": "本次查核 2026-11-03：Business 方案與桌面程式要求。"
+    },
+    {
+      "title": "TransferNow 方案",
+      "url": "https://www.transfernow.net/en/prices",
+      "scope": "本次查核 2026-11-03：免費及付費容量與保存期限。"
+    },
+    {
+      "title": "TransferNow 加密",
+      "url": "https://www.transfernow.net/en/explore/security",
+      "scope": "本次查核 2026-11-03：TLS、靜態 AES-256 與付費 SSE-C。"
+    },
+    {
+      "title": "pCloud Transfer 官方介紹",
+      "url": "https://blog.pcloud.com/pcloud-transfer-send-large-files-for-free/",
+      "scope": "本次查核 2026-11-03：獨立傳檔工具的免費容量、期限、收件人數。"
+    },
+    {
+      "title": "Wormhole FAQ",
+      "url": "https://wormhole.app/faq",
+      "scope": "本次查核 2026-11-03：5GB 託管與更大檔案 P2P、24 小時與待推出 Pro。"
+    },
+    {
+      "title": "Wormhole 主頁",
+      "url": "https://wormhole.app/",
+      "scope": "本次查核 2026-11-03：目前公開宣傳上限 10GB。"
+    },
+    {
+      "title": "Wormhole 安全設計",
+      "url": "https://wormhole.app/security",
+      "scope": "本次查核 2026-11-03：端對端加密與金鑰處理。"
     }
   ]
 }
