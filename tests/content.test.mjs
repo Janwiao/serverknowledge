@@ -22,7 +22,7 @@ test('generated JS exactly matches content JSON',()=>{
 });
 test('all static asset references exist and are relative',()=>{
  const html=read('index.html');const links=[...html.matchAll(/(?:src|href)="([^"]+)"/g)].map(m=>m[1]);
- for(const link of links){if(link.startsWith('#'))continue;assert.ok(!link.startsWith('/')&&!/^https?:/.test(link));assert.ok(fs.existsSync(path.join(root,link)),link);}
+ for(const link of links){if(link.startsWith('#'))continue;assert.ok(!link.startsWith('/')&&!/^https?:/.test(link));assert.ok(fs.existsSync(path.join(root,link.split("?")[0])),link);}
 });
 test('public sources use HTTPS and do not expose private chats',()=>{
  for(const s of data.sources){const url=new URL(s.url);assert.equal(url.protocol,'https:');assert.ok(!url.hostname.includes('chatgpt.com'));}

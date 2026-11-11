@@ -12,3 +12,8 @@ test('new terms and source links are present without duplicate definitions',()=>
  assert.equal(new Set(d.sources.map(s=>s.url)).size,d.sources.length);
  assert.ok(d.sources.some(s=>s.url==='https://help.pcloud.com/article/team-collaboration'));
 });
+
+test('HTML loads the matching content version',()=>{
+ const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+ assert.ok(html.includes('src="data/knowledge.js?v='+d.version+'"'));
+});
