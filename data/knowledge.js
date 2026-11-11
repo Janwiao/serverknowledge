@@ -2,8 +2,8 @@
 window.SOFTWARE_ATLAS = {
   "title": "透視軟體",
   "subtitle": "從程式碼到上線，把軟體背後的每一層看清楚。",
-  "version": "0.3.0",
-  "updated": "2026-11-03（增補即時分享與 PDF 知識；非全站重新查核）",
+  "version": "0.4.0",
+  "updated": "2026-11-12（增補同步型雲端與工作室協作；非全站重新查核）",
   "chapters": [
     {
       "id": "map",
@@ -490,6 +490,66 @@ window.SOFTWARE_ATLAS = {
         "file-sharing",
         "cache",
         "security"
+      ]
+    },
+    {
+      "id": "cloud-sync",
+      "title": "同步型雲端：工作資料夾、虛擬磁碟與備份",
+      "lead": "把雲端接進電腦的日常工作流程，適合個人多裝置，也適合工作室；這是用途分類，不是互斥的廠商分類。",
+      "flow": [
+        "判斷工作／收藏／交付用途",
+        "選擇本機副本或隨選下載",
+        "指定資料夾與權限",
+        "確認同步完成再換裝置",
+        "另保留可還原的備份"
+      ],
+      "points": [
+        "先分四種用途：長期儲存／收藏像倉庫；即時傳檔像快遞；工作同步像多台電腦共用的工作資料夾；備份則是出事時能還原的歷史副本。同一服務可能兼具多種功能。這裡的「冷收藏」指少改動的收藏，不等於雲端供應商有取回等待時間或費用的冷儲存產品。",
+        "pCloud Sync 是 pCloud Drive 桌面程式中的雙向同步功能：將本機資料夾與雲端資料夾配對。本機有完整副本，可以離線工作；重新連網後同步。修改、重新命名與刪除會連動，並非只上傳不回傳。",
+        "pCloud Drive 的虛擬磁碟則讓雲端檔案出現在檔案總管，不必預先下載整庫。開啟與上傳仍會用本機快取；設成離線可用也會佔空間。不能把「雲端磁碟」理解成永遠零本機用量。",
+        "Google Drive 電腦版也有類似概念：鏡像會保留完整本機副本；串流主要放在雲端、需要時下載並快取。共用雲端硬碟採串流，電腦來源資料夾採鏡像，不能假設每種資料夾都能自由切換。",
+        "同步不等於獨立備份：誤刪、誤覆寫或被加密的檔案也可能同步出去。版本紀錄與垃圾桶有保留條件；重要資料還要有獨立副本，確認刪除規則、保留期限，並試著還原。產品功能叫 Backup，也要看實際規則，不只看名稱。",
+        "雲端儲存不會把你的 Photoshop、遊戲編輯器或 EXE 搬到服務商電腦運算。檔案在雲端，本機應用程式仍使用本機 CPU／RAM；雲端運算、遠端桌面與網站託管是另一層服務。",
+        "大型專案先下載到本機工作較容易預測效能。先確認狀態為同步完成再關機或換機，不要把正在寫入的資料庫、虛擬機磁碟或所有開發暫存直接塞進同步夾。pCloud 特別不建議同步 .git 目錄、瀏覽器資料及持續變動的檔案。"
+      ],
+      "example": "插畫原稿在桌機完成後等待同步，筆電再開啟同一專案接著做；結案另存唯讀版本並做獨立備份，要交付客戶時才產生分享連結。這是三個流程，不是一個同步按鈕包辦。",
+      "trap": "Sync 是同步方式，不是另一家雲端，也不是工作室專用方案。刪除同步中的本機檔案可能連雲端一起刪除；要釋放空間應使用該軟體正式的隨選／離線管理功能，先確認同步完成。",
+      "related": [
+        "cloud-collaboration",
+        "file-sharing",
+        "cache",
+        "operations",
+        "hosting"
+      ]
+    },
+    {
+      "id": "cloud-collaboration",
+      "title": "工作室協作：共用檔案不等於多人即時共編",
+      "lead": "多人一起做專案時，重點除了容量，還有檔案歸屬、權限、版本及同時編輯衝突。以下是用途選擇，不是速度排名。",
+      "flow": [
+        "決定團隊檔案歸屬",
+        "按專案設定成員權限",
+        "約定編輯／鎖檔規則",
+        "同步與檢查版本",
+        "結案封存及獨立備份"
+      ],
+      "points": [
+        "pCloud／pCloud Business：適合原稿、素材與交付檔的同步及分享；Business 另有使用者、團隊與資料夾權限管理。官方明確說明不支援多人即時共同編輯同一份文件，同時修改會產生衝突檔。個人 Sync 功能不等於已具備完整企業管理。",
+        "Google Drive／Google Workspace：文件協作可搭配 Google 文件與試算表；多人長期工作的檔案可考慮共用雲端硬碟，其檔案歸組織／團隊，不跟著個別成員離開而消失。功能可用性仍依帳戶方案與管理設定。",
+        "Microsoft 365：OneDrive 偏個人工作檔案，SharePoint 文件庫偏團隊長期共用；Teams 頻道檔案背後放在 SharePoint。Word／Excel 等相容格式可搭配支援的應用程式共編，這不代表任意 PSD、3D 或遊戲素材也能即時合併。",
+        "Dropbox：適合跨裝置與團隊檔案同步。兩人同時改同一檔，或有人離線修改，都可能產生衝突副本。部分付費團隊方案提供鎖檔，仍需確認方案和成員是否遵守流程。",
+        "Synology Drive：以自有 Synology NAS 作為檔案中心，可做跨裝置同步、Team Folder、分享與歷史版本管理。好處是自行管理儲存環境，但硬碟、網路、更新、安全和異地備份也要自己負責；NAS 和 RAID 本身不是完整備份策略。",
+        "分工建議：原稿與素材用同步資料夾；可即時共編的企劃用文件協作工具；程式碼、設定與可合併文字用 Git 流程；大型二進位素材依需要評估 Git LFS 或具鎖定功能的版本管理。同步服務不能代替程式碼分支、審查與合併。",
+        "工作室採購前先測一個小專案：檢查大檔和多小檔效能、衝突行為、離線使用、版本回復、刪除連動及權限撤回。確認素材歸屬及離職交接，不共用一組帳密，也不要只比較每 TB 價格。"
+      ],
+      "example": "三人美術團隊可各自編輯不同角色原稿，共用素材庫；要修改同一份 PSD 先交接或鎖檔，企劃表另外共編。這比讓三人同時開同一個同步檔案安全，也不要求把整間工作室全部搬到同一家服務。",
+      "trap": "共用資料夾代表看得到相同檔案；即時共編代表軟體能協調同時修改；版本管理則記錄並管理變更。三者可以合作，不能互相畫等號。本次未實測台灣傳輸速度，也未比較現行價格。",
+      "related": [
+        "cloud-sync",
+        "file-sharing",
+        "repository",
+        "security",
+        "operations"
       ]
     },
     {
@@ -1463,6 +1523,86 @@ window.SOFTWARE_ATLAS = {
       "definition": "DocuSeal｜開源電子簽署與表單流程工具，適合建立填寫／簽署欄位、收集簽署及管理流程；有自架及商業服務。不是 Acrobat 式通用原文編輯器，也不是掃描辨識工具；功能與授權範圍依版本。",
       "confusion": "先分原文編輯、註記、頁面管理與 OCR；功能及授權為 2026-11-03 查核快照。",
       "chapter": "pdf-tools"
+    },
+    {
+      "id": "term-111",
+      "term": "pCloud Drive",
+      "aliases": "虛擬磁碟,雲端硬碟,pCloud",
+      "definition": "pCloud 桌面程式可把雲端空間呈現為虛擬磁碟，並提供 Sync 等功能。",
+      "confusion": "按需存取仍會使用本機快取，離線副本也佔硬碟空間。",
+      "chapter": "cloud-sync"
+    },
+    {
+      "id": "term-112",
+      "term": "pCloud Sync",
+      "aliases": "雙向同步,工作資料夾,pCloud",
+      "definition": "把本機資料夾與 pCloud 雲端資料夾連接的同步功能，可保留本機副本。",
+      "confusion": "刪除與修改也會連動；不是只供工作室使用的獨立產品。",
+      "chapter": "cloud-sync"
+    },
+    {
+      "id": "term-113",
+      "term": "鏡像同步",
+      "aliases": "Mirror,完整本機副本,離線",
+      "definition": "在本機保存所選雲端資料的完整副本，方便離線工作，連網後交換變更。",
+      "confusion": "同步副本也可能跟著誤刪或誤改，不能直接當成獨立備份。",
+      "chapter": "cloud-sync"
+    },
+    {
+      "id": "term-114",
+      "term": "串流與隨選下載",
+      "aliases": "Stream,On-demand,快取,虛擬磁碟",
+      "definition": "檔案主要保留在雲端，需要時下載；常用檔案可另設為離線可用。",
+      "confusion": "省空間不等於零本機用量，快取、離線檔與待上傳資料都可能佔用硬碟。",
+      "chapter": "cloud-sync"
+    },
+    {
+      "id": "term-115",
+      "term": "同步衝突",
+      "aliases": "Conflicted copy,版本衝突,多人修改",
+      "definition": "兩台裝置或多人對同一檔案分別修改時，同步服務可能保留不同副本，需要人工確認。",
+      "confusion": "服務能同步檔案，不代表它知道如何合併圖像、3D 場景或文件內容。",
+      "chapter": "cloud-collaboration"
+    },
+    {
+      "id": "term-116",
+      "term": "Google Drive 電腦版",
+      "aliases": "Google Drive for desktop,串流,鏡像",
+      "definition": "把 Google Drive 接入電腦檔案管理流程，提供串流及鏡像等模式。",
+      "confusion": "同步模式依資料夾類型而異；即時文件共編與桌面同步不是同一功能。",
+      "chapter": "cloud-sync"
+    },
+    {
+      "id": "term-117",
+      "term": "OneDrive",
+      "aliases": "Microsoft 365,個人工作檔案,同步",
+      "definition": "Microsoft 的雲端檔案服務，可在裝置間同步與分享個人工作檔案。",
+      "confusion": "團隊長期文件通常還要考慮 SharePoint，不是把所有資料掛在一個人的帳號下。",
+      "chapter": "cloud-collaboration"
+    },
+    {
+      "id": "term-118",
+      "term": "SharePoint 文件庫",
+      "aliases": "Microsoft 365,Teams,團隊文件",
+      "definition": "用於組織及團隊共同管理文件；Teams 頻道檔案使用 SharePoint 儲存。",
+      "confusion": "即時共編仍取決於應用程式、格式與設定，不是所有檔案都能同時修改。",
+      "chapter": "cloud-collaboration"
+    },
+    {
+      "id": "term-119",
+      "term": "Dropbox",
+      "aliases": "檔案同步,工作室,鎖檔",
+      "definition": "提供跨裝置檔案同步與分享，部分團隊方案提供鎖檔協調。",
+      "confusion": "同時或離線修改同一檔仍可能出現衝突副本。",
+      "chapter": "cloud-collaboration"
+    },
+    {
+      "id": "term-120",
+      "term": "Synology Drive",
+      "aliases": "NAS,私有雲,Team Folder",
+      "definition": "以 Synology NAS 提供同步、共用資料夾及歷史版本管理的工具。",
+      "confusion": "自管儲存也要負責設備維護與異地備份；不要把 RAID 當成備份。",
+      "chapter": "cloud-collaboration"
     }
   ],
   "faq": [
@@ -1560,6 +1700,21 @@ window.SOFTWARE_ATLAS = {
       "question": "要合併 PDF 一定得買 Adobe 嗎？",
       "answer": "不用。PDFsam Basic 是免費開源的本機頁面工具；Stirling 也有相關功能。它們的用途和付費 Acrobat 全套能力不同，先按任務挑選。",
       "chapter": "pdf-tools"
+    },
+    {
+      "question": "同步型雲端是不是只適合工作室？",
+      "answer": "不是。個人桌機和筆電接續工作也很適合。工作室則更需要團隊檔案歸屬、個別權限、版本回復與交接；這些能力不一定包含在個人方案中。",
+      "chapter": "cloud-collaboration"
+    },
+    {
+      "question": "同步到雲端後，可以直接刪掉本機檔案省空間嗎？",
+      "answer": "先不要。在雙向同步資料夾刪除，雲端也可能跟著刪掉。先確認資料已上傳完成，再依軟體正式流程切換隨選下載、取消離線保留或解除同步；操作後核對雲端檔案仍完整。",
+      "chapter": "cloud-sync"
+    },
+    {
+      "question": "大家都在同一個雲端資料夾，就能同時改同一個檔案嗎？",
+      "answer": "不一定。同步搬運的是檔案，未必能合併內容。pCloud 不支援多人即時文件共編，Dropbox 也可能產生衝突副本。相容的 Google 文件或 Microsoft Office 共編是另一種能力；原稿與大型素材應先交接、鎖檔或使用適合的版本管理。",
+      "chapter": "cloud-collaboration"
     }
   ],
   "sources": [
@@ -1864,6 +2019,61 @@ window.SOFTWARE_ATLAS = {
       "title": "DocuSeal 官方倉庫",
       "url": "https://github.com/docusealco/docuseal",
       "scope": "PDF 知識查核 2026-11-03：開源電子簽署與表單流程定位。"
+    },
+    {
+      "title": "pCloud Drive 與 Sync 官方說明",
+      "url": "https://help.pcloud.com/article/pcloud-drive-vs-pcloud-sync",
+      "scope": "同步與協作知識查核 2026-11-12：虛擬磁碟、雙向同步及離線副本。"
+    },
+    {
+      "title": "pCloud Drive 快取與磁碟用量",
+      "url": "https://help.pcloud.com/article/pcloud-drive-settings-overview",
+      "scope": "同步與協作知識查核 2026-11-12：存取與上傳會使用本機快取。"
+    },
+    {
+      "title": "pCloud 不建議同步的檔案",
+      "url": "https://help.pcloud.com/article/files-not-recommended-for-sync-backup-or-uploads",
+      "scope": "同步與協作知識查核 2026-11-12：.git、瀏覽器資料及持續變動檔案的風險。"
+    },
+    {
+      "title": "pCloud Business 團隊協作",
+      "url": "https://help.pcloud.com/article/team-collaboration",
+      "scope": "同步與協作知識查核 2026-11-12：團隊權限及不支援多人即時文件共編的限制。"
+    },
+    {
+      "title": "Google Drive 電腦版進階說明",
+      "url": "https://support.google.com/drive/answer/16631477?hl=en",
+      "scope": "同步與協作知識查核 2026-11-12：串流、鏡像、共用雲端硬碟與換模式前的同步要求。"
+    },
+    {
+      "title": "Google 共用雲端硬碟",
+      "url": "https://support.google.com/a/users/answer/7212025?hl=en",
+      "scope": "同步與協作知識查核 2026-11-12：團隊檔案歸屬、成員變動與管理。"
+    },
+    {
+      "title": "Microsoft OneDrive 與 SharePoint 使用分工",
+      "url": "https://support.microsoft.com/en-us/sharepoint/legacy/get-started-creating-managing-and-sharing-files-in-onedrive-and-sharepoint",
+      "scope": "同步與協作知識查核 2026-11-12：個人檔案、團隊文件與相容應用程式共編。"
+    },
+    {
+      "title": "Microsoft Teams 檔案儲存位置",
+      "url": "https://support.microsoft.com/en-us/teams/files/file-storage-in-microsoft-teams",
+      "scope": "同步與協作知識查核 2026-11-12：Teams 頻道檔案與 SharePoint 的關係。"
+    },
+    {
+      "title": "Dropbox 衝突副本",
+      "url": "https://help.dropbox.com/organize/conflicted-copy",
+      "scope": "同步與協作知識查核 2026-11-12：同時或離線修改造成的衝突與人工合併。"
+    },
+    {
+      "title": "Dropbox 檔案鎖定",
+      "url": "https://help.dropbox.com/organize/file-locking",
+      "scope": "同步與協作知識查核 2026-11-12：鎖檔用途及適用方案須另核對。"
+    },
+    {
+      "title": "Synology Drive 管理主控台",
+      "url": "https://kb.synology.com/en-us/PAS/help/SynologyDrive/drive_admin_console",
+      "scope": "同步與協作知識查核 2026-11-12：Team Folder、歷史版本與管理功能。"
     }
   ]
 };
